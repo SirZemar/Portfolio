@@ -7,6 +7,8 @@ import { v4 as uuid } from 'uuid';
 import paths from './paths';
 // Shuffle
 import { shuffle } from './helpers';
+// Styles
+import { stylesVariables as style } from "./GlobalStyles";
 
 export interface Coordenates {
     x: number;
@@ -19,10 +21,15 @@ const Home: React.FC = () => {
     const [pathArray, setPathArray] = useState<string[]>([]);
 
     const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+
+        const offset = parseFloat(style.menuWidth) * 16;
+        const x = e.pageX - offset;
+        const y = e.pageY;
+
         setMoussePositionArray(
-            mousePositionArray
-                ? prev => [...prev, { x: e.pageX, y: e.pageY, id: uuid() }]
-                : [{ x: e.pageX, y: e.pageY, id: uuid() }]
+            mousePositionArray.length > 0
+                ? prev => [...prev, { x, y, id: uuid() }]
+                : [{ x, y, id: uuid() }]
         )
 
         const newPaths = shuffle(paths);
@@ -32,7 +39,7 @@ const Home: React.FC = () => {
     }
 
     return (
-        <div onClick={handleClick} style={{ width: '100vw', height: '100vh', position: 'relative' }} >
+        <div className="page_container" onClick={handleClick} style={{ position: 'relative' }} >
             <Ripple coordenatesArray={mousePositionArray} setCoordenatesArray={setMoussePositionArray} paths={pathArray} />
         </div>
     )
