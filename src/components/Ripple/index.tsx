@@ -46,7 +46,7 @@ const Ripple: React.FC<Props> = ({ coordenatesArray, setCoordenatesArray, paths 
     return (
         <>
             {coordenatesArray.map((coordenates) =>
-                <SVG key={coordenates.id}  >
+                <SVG className="page_container" key={coordenates.id}  >
                     <g className="blob" >
                         <motion.path
                             variants={variants}
