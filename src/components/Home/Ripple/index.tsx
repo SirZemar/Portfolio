@@ -4,7 +4,7 @@ import { SVG } from './Ripple.styles';
 // Animation
 import { animate, motion } from 'framer-motion';
 // Type
-import { Coordenates } from '../../pages/Home';
+import { Coordenates } from '..';
 
 interface Props {
     coordenatesArray: Coordenates[];
@@ -46,7 +46,7 @@ const Ripple: React.FC<Props> = ({ coordenatesArray, setCoordenatesArray, paths 
     return (
         <>
             {coordenatesArray.map((coordenates) =>
-                <SVG className="page_container" key={coordenates.id}  >
+                <SVG key={coordenates.id}  >
                     <g className="blob" >
                         <motion.path
                             variants={variants}

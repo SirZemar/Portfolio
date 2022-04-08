@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 // Components 
-import Ripple from "../components/Ripple";
+import Ripple from "./Ripple";
 // Unique Id
 import { v4 as uuid } from 'uuid';
 // Paths
-import paths from '../paths';
+import paths from '../../paths';
 // Shuffle
-import { shuffle } from '../helpers';
+import { shuffle } from '../../helpers';
 // Styles
-import { stylesVariables as style } from "../GlobalStyles";
+import { stylesVariables as style } from "../../GlobalStyles";
+import { Container } from "./Home.styles";
 
 export interface Coordenates {
     x: number;
@@ -39,9 +40,10 @@ const Home: React.FC = () => {
     }
 
     return (
-        <div className="page_container" onClick={handleClick} style={{ position: 'relative' }} >
+        <Container onClick={handleClick}>
             <Ripple coordenatesArray={mousePositionArray} setCoordenatesArray={setMoussePositionArray} paths={pathArray} />
-        </div>
+        </Container>
+
     )
 
 };

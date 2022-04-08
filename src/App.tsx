@@ -1,24 +1,28 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { GlobalStyle } from './GlobalStyles';
-// Pages
-import Home from './pages/Home';
-import Skills from './pages/Skills';
+import { Container } from './App.styles';
 // Components
+import Home from './components/Home';
+import Skills from './components/Skills';
 import Nav from './components/Menu';
-import Portfolio from './pages/Portfolio';
-import Contacts from './pages/Contacts';
+import Portfolio from './components/Portfolio';
+import Contacts from './components/Contacts';
+import About from './components/About';
 
 const App: React.FC = () => (
   <Router >
     <GlobalStyle />
-    <Nav />
-    <Routes >
-      <Route path='/' element={<Home />} />
-      <Route path='/skills' element={<Skills />} />
-      <Route path='/portfolio' element={<Portfolio />} />
-      <Route path='/contacts' element={<Contacts />} />
-    </Routes>
+    <Container>
+      <Nav />
+      <Routes >
+        <Route path='/' element={<Home />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/skills' element={<Skills />} />
+        <Route path='/portfolio' element={<Portfolio />} />
+        <Route path='/contacts' element={<Contacts />} />
+      </Routes>
+    </Container>
   </Router>
 
 )

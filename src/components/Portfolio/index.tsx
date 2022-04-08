@@ -1,7 +1,7 @@
 import React from "react";
 
 const Portfolio: React.FC = () => {
-    return <p>Portfolio</p>
+    return <div style={{ background: 'red' }}>Portfolio</div>
 }
 
 export default Portfolio;

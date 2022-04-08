@@ -1,7 +1,7 @@
 import React from "react";
 
 const Contacts: React.FC = () => {
-    return <p>Contacts</p>
+    return <div style={{ background: 'red' }}>Contacts</div>
 }
 
 export default Contacts;

@@ -20,7 +20,7 @@ export const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         background-color: var(--base);
-        padding-left: ${stylesVariables.menuWidth} ;
+        /* padding-left: ${stylesVariables.menuWidth} ; */
     }
 
 
@@ -30,10 +30,10 @@ export const GlobalStyle = createGlobalStyle`
         margin: 0;
     }
 
-    .page_container {
+    /* .page_container {
         width: calc(100vw - ${stylesVariables.menuWidth});
         height: 100vh;
-    }
+    } */
 
     .nav_list {
         text-decoration: none;   

@@ -9,12 +9,17 @@ const Nav: React.FC = () => (
             <Link className="nav_list" to='/'>
                 Home
             </Link>
+            <Link className="nav_list" to='/about'>
+                About
+            </Link>
             <Link className="nav_list" to='/skills'>
                 Skills
-            </Link><Link className="nav_list" to='/portfolio'>
+            </Link>
+            <Link className="nav_list" to='/portfolio'>
                 Portfolio
-            </Link><Link className="nav_list" to='/contacts'>
-                Contact
+            </Link>
+            <Link className="nav_list" to='/contacts'>
+                Contacts
             </Link>
         </Content>
     </Wrapper>
