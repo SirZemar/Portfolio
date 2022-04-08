@@ -4,6 +4,7 @@ import { stylesVariables as style } from "../../GlobalStyles";
 export const Wrapper = styled.div`
     position: fixed;
     left: 0;
+    top: 0;
     border: 1px solid red;
     height: 100vh;
     width: ${style.menuWidth};
