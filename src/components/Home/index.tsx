@@ -8,7 +8,6 @@ import paths from '../../paths';
 // Shuffle
 import { shuffle } from '../../helpers';
 // Styles
-import { stylesVariables as style } from "../../GlobalStyles";
 import { Container } from "./Home.styles";
 
 export interface Coordenates {
@@ -23,7 +22,7 @@ const Home: React.FC = () => {
 
     const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
 
-        const offset = parseFloat(style.menuWidth) * 16;
+        const offset = e.currentTarget.getBoundingClientRect().x;
         const x = e.pageX - offset;
         const y = e.pageY;
 

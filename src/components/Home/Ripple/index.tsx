@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 // Styles 
 import { SVG } from './Ripple.styles';
 // Animation
@@ -18,20 +18,20 @@ interface variantProps {
 }
 
 const variants = {
-    initial: (props: variantProps) => ({
+    initial: ({ coordenates }: variantProps) => ({
         scale: 0,
         opacity: 1,
-        x: props.coordenates.x,
-        y: props.coordenates.y,
+        x: coordenates.x,
+        y: coordenates.y,
     }),
-    animate: (props: variantProps) => ({
+    animate: ({ paths }: variantProps) => ({
         scale: 5,
         opacity: 0,
         transition: {
             duration: 1.5, ease: 'easeOut'
         },
         d:
-            props.paths,
+            paths,
     })
 }
 

@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { stylesVariables as style } from "../../GlobalStyles";
 
 export const Wrapper = styled.div`
     border: 1px solid red;
     height: 100%;
-    min-width: ${style.menuWidth};
+    min-width: 7rem;
 `
 
 export const Content = styled.nav`
