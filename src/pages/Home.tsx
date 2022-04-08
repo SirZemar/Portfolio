@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 // Components 
-import Ripple from "./components/Ripple";
+import Ripple from "../components/Ripple";
 // Unique Id
 import { v4 as uuid } from 'uuid';
 // Paths
-import paths from './paths';
+import paths from '../paths';
 // Shuffle
-import { shuffle } from './helpers';
+import { shuffle } from '../helpers';
 // Styles
-import { stylesVariables as style } from "./GlobalStyles";
+import { stylesVariables as style } from "../GlobalStyles";
 
 export interface Coordenates {
     x: number;

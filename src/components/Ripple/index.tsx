@@ -4,7 +4,7 @@ import { SVG } from './Ripple.styles';
 // Animation
 import { animate, motion } from 'framer-motion';
 // Type
-import { Coordenates } from '../../Home';
+import { Coordenates } from '../../pages/Home';
 
 interface Props {
     coordenatesArray: Coordenates[];
