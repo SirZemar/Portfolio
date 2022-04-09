@@ -4,15 +4,7 @@ export const Wrapper = styled.div`
     border: 1px solid red;
     height: 100%;
     min-width: 7rem;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
 `
 
-export const Content = styled.nav`
-    a.nav_list {
-        display: block;
-        color: white;
-        text-align: center;
-        border: 1px solid #f23fff;
-        padding: 1rem ;
-    }
-
-`

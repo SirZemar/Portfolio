@@ -5,7 +5,7 @@ import { Container } from './App.styles';
 // Components
 import Home from './components/Home';
 import Skills from './components/Skills';
-import Nav from './components/Menu';
+import Menu from './components/Menu';
 import Portfolio from './components/Portfolio';
 import Contacts from './components/Contacts';
 import About from './components/About';
@@ -14,7 +14,7 @@ const App: React.FC = () => (
   <Router >
     <GlobalStyle />
     <Container>
-      <Nav />
+      <Menu />
       <Routes >
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />

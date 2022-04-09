@@ -1,28 +1,16 @@
 import React from "react";
-import { Content, Wrapper } from "./Menu.styles";
-// Routes
-import { Link } from 'react-router-dom';
+import Logo from "./Logo";
+import { Wrapper } from "./Menu.styles";
+// Components
+import Nav from "./Nav";
+import Social from "./Social";
 
-const Nav: React.FC = () => (
+const Menu: React.FC = () => (
     <Wrapper >
-        <Content>
-            <Link className="nav_list" to='/'>
-                Home
-            </Link>
-            <Link className="nav_list" to='/about'>
-                About
-            </Link>
-            <Link className="nav_list" to='/skills'>
-                Skills
-            </Link>
-            <Link className="nav_list" to='/portfolio'>
-                Portfolio
-            </Link>
-            <Link className="nav_list" to='/contacts'>
-                Contacts
-            </Link>
-        </Content>
+        <Logo />
+        <Nav />
+        <Social />
     </Wrapper>
 )
 
-export default Nav;
+export default Menu;
