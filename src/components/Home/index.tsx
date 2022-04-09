@@ -8,6 +8,7 @@ import paths from '../../paths';
 // Shuffle
 import { shuffle } from '../../helpers';
 // Styles
+import { Wrapper } from "../../common/styles";
 import { Container } from "./Home.styles";
 
 export interface Coordenates {
@@ -41,8 +42,9 @@ const Home: React.FC = () => {
     return (
         <Container onClick={handleClick}>
             <Ripple coordenatesArray={mousePositionArray} setCoordenatesArray={setMoussePositionArray} paths={pathArray} />
+            <Wrapper>
+            </Wrapper>
         </Container>
-
     )
 
 };

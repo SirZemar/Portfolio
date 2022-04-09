@@ -26,4 +26,8 @@ export const GlobalStyle = createGlobalStyle`
     .nav_list {
         text-decoration: none;   
     }
+
+    h1, h2, p {
+        color: white;
+    }
 `

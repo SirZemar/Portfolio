@@ -11,6 +11,8 @@ export const Content = styled.nav`
         display: block;
         color: white;
         text-align: center;
+        border: 1px solid #f23fff;
+        padding: 1rem ;
     }
 
 `
