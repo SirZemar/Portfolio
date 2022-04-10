@@ -10,6 +10,8 @@ import { shuffle } from '../../helpers';
 // Styles
 import { Wrapper } from "../../common/styles";
 import { Container } from "./Home.styles";
+import Stars from "./Stars";
+import Asteroids from "./Asteroids";
 
 export interface Coordenates {
     x: number;
@@ -43,6 +45,8 @@ const Home: React.FC = () => {
         <Container onClick={handleClick}>
             <Ripple coordenatesArray={mousePositionArray} setCoordenatesArray={setMoussePositionArray} paths={pathArray} />
             <Wrapper>
+                <Stars />
+                <Asteroids />
             </Wrapper>
         </Container>
     )
