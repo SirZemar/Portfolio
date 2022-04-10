@@ -20,15 +20,15 @@ interface variantProps {
 const variants = {
     initial: ({ coordenates }: variantProps) => ({
         scale: 0,
-        opacity: 1,
+        opacity: 0.8,
         x: coordenates.x,
         y: coordenates.y,
     }),
     animate: ({ paths }: variantProps) => ({
-        scale: 5,
+        scale: 2,
         opacity: 0,
         transition: {
-            duration: 1.5, ease: 'easeOut'
+            duration: 1, ease: 'easeOut'
         },
         d:
             paths,
