@@ -19,6 +19,8 @@ export const position = {
     centerLeft: 'e / e / j / j',
     centerTop: 'b / b / g / g',
     centerBottom: 'j / j / o/ o',
+    centerWide: 'e / e / l / l',
+    centerTall: 'b / b / o / o',
     cornerTopLeft: 'a',
     cornerTopRight: 'd',
     cornerBottomLeft: 'm',
