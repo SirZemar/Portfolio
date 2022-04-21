@@ -8,7 +8,7 @@ import paths from '../../paths';
 // Shuffle
 import { shuffle } from '../../helpers';
 // Styles
-import { Wrapper } from "../../common/styles";
+import { pageWrapper as Wrapper } from "../../common/pageWrapper";
 import { Container } from "./Home.styles";
 import Stars from "./Stars";
 import Asteroids from "./Asteroids";

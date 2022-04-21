@@ -1,5 +1,5 @@
 import React from "react";
-import { Wrapper } from "../../common/styles";
+import { pageWrapper as Wrapper } from "../../common/pageWrapper";
 import { Container } from "./Contacts.styles";
 
 const Contacts: React.FC = () => (
