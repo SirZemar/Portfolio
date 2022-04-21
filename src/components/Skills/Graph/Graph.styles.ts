@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    grid-area: b;
-    align-self: center;
 
     label {
         display: block;

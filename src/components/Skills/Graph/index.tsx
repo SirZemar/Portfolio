@@ -1,7 +1,11 @@
 import React from "react";
 import { Container } from "./Graph.styles";
+// Types
+import { LayoutProps } from "../../../common/Layout";
 
-const Graph: React.FC = () => (
+interface Props extends LayoutProps { };
+
+const Graph: React.FC<Props> = () => (
     <Container>
         <ul>
             <li>
