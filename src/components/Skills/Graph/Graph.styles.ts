@@ -20,8 +20,8 @@ const shadow = {
 }
 
 const barFill = (width: string) => keyframes`
-from {width: 0}
-to {width: ${width}}
+    from {width: 0}
+    to {width: ${width}}
 `
 
 export const ProgressBar = styled.div<Props>`
@@ -45,6 +45,3 @@ export const Container = styled.div`
         }
     }
 `
-
-
-
