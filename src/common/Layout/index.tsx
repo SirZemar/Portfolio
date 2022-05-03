@@ -54,7 +54,6 @@ export const placement = {
         }
     }
 }
-console.log(placement)
 
 const Layout: React.FC = ({ children }) => {
 
@@ -67,7 +66,6 @@ const Layout: React.FC = ({ children }) => {
                     return (
                         <GridItem area={child.props.position} placement={child.props.placement}>
                             {child}
-                            {console.log(child.props)}
                         </GridItem>
                     )
                 }
