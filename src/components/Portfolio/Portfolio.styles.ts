@@ -4,7 +4,7 @@ import { LayoutProps } from "../../common/Layout";
 interface Props extends LayoutProps { }
 
 interface Project {
-    backgroundUrl: string
+    backgroundUrl: string;
 }
 
 const color = '255, 0, 0';
