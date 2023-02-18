@@ -5,21 +5,20 @@ import { LayoutProps } from "../../../common/Layout";
 
 interface Props extends LayoutProps { };
 
+const skills = [
+    { name: 'HTML', width: '75%' },
+    { name: 'CSS', width: '80%' },
+    { name: 'JavaScript', width: '70%' },
+    { name: 'React', width: '60%' },
+    { name: 'Angular', width: '55%' },
+    { name: 'Firebase', width: '20%' },
+]
+
 const Graph: React.FC<Props> = () => {
 
     const alternate = useRef(false);
     const delay = useRef(0);
 
-    const skills = [
-        { name: 'HTML', width: '75%' },
-        { name: 'JavaScript', width: '75%' },
-        { name: 'React', width: '70%' },
-        { name: 'CSS', width: '55%' },
-        { name: 'Angular', width: '40%' },
-        { name: 'Firebase', width: '20%' },
-    ]
-
-    const skillsClasseNames = skills.map(skill => skill.name);
     return (
         <Container >
             <ul>

@@ -23,5 +23,6 @@ export const Project = styled.div<Props & Project>`
     background: url(${props => props.backgroundUrl});
     background-repeat: no-repeat ;
     background-size: cover;
+    background-position: center;
     aspect-ratio: 1 / 1;
 `
