@@ -52,7 +52,7 @@ const Portfolio: React.FC = () => {
                 <Title position={position.topSlim} placement={placement.center}>
                     <h1>What I have been doing</h1>
                 </Title>
-                <Container position={position.centerWide} placement={placement.withAuto('center', true)}>
+                <Container position={position.top} placement={placement.withAuto('center', true)}>
                     {reposInfo.map((project: ProjectModel, index) =>
                         <Project key={index} onClick={() => openModal(true, project)} backgroundUrl={project.logo}></Project>
                     )}

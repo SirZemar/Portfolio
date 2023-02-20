@@ -1,10 +1,11 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
     :root {
     --largeWidth: 1280px;
     --medWidth: 1000px;
-    --base: #1f1f24
+    --base: #1f1f24;
+    --secondary: #656565
     }
 
     * {

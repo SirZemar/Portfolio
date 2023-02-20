@@ -2,15 +2,39 @@ import { url } from "inspector";
 import styled from "styled-components";
 
 interface Props {
-    image?: string
 }
 
+export const Header = styled.header<Props> `
+    background-color: var(--secondary);
+    position: relative;
+    width: 60vw;
+    border-radius: 15px 15px 0 0;
+    z-index: 100;
+    padding: 10px;
+    p{
+        margin-bottom: 0;
+    }
+`
+
+export const Footer = styled.footer<Props>`
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    background-color: var(--secondary);
+    position: relative;
+    border-radius: 0 0 15px 15px;
+    height: 50px;
+    margin-top: -5px;
+
+    .button-container {
+        margin-top: 5px;
+    }
+`
 export const Container = styled.div<Props>`
     position: relative;
     width: 60vw;
-    height: 60vh;
-    height: clamp(400px, 60vh, 800px);
-    /* background: ${props => props.image ? `url(${props.image})` : 'red'} ; */
+    max-height: 60vh;
+    /* height: clamp(400px, 60vh, 800px); */
     z-index: 100;
     animation: anim 0.5s;
     overflow-y: scroll;
@@ -21,6 +45,7 @@ export const Container = styled.div<Props>`
 
     ::-webkit-scrollbar {
         width: 5px;
+        overflow: hidden ;
         }
         ::-webkit-scrollbar-track {
         background: black;

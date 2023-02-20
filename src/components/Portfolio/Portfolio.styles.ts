@@ -25,4 +25,22 @@ export const Project = styled.div<Props & Project>`
     background-size: cover;
     background-position: center;
     aspect-ratio: 1 / 1;
+    cursor: pointer ;
+    position:relative;
+
+    :after {
+        content: "";
+        background: black;
+        opacity: 0;
+        display: block;
+        position: absolute;
+        height: 100%;
+        transition: 0.2s;
+        width: 100%;
+    }
+    :hover {
+        :after {
+            opacity: 0.2;
+        }
+    }
 `
