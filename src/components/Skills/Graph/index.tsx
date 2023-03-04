@@ -7,11 +7,12 @@ interface Props extends LayoutProps { };
 
 const skills = [
     { name: 'HTML', width: '75%' },
-    { name: 'CSS', width: '80%' },
-    { name: 'JavaScript', width: '70%' },
+    { name: 'CSS', width: '85%' },
+    { name: 'JavaScript', width: '75%' },
     { name: 'React', width: '60%' },
-    { name: 'Angular', width: '55%' },
-    { name: 'Firebase', width: '20%' },
+    { name: 'Angular', width: '70%' },
+    { name: 'Firebase', width: '45%' },
+    { name: 'AWS', width: '45%' },
 ]
 
 const Graph: React.FC<Props> = () => {

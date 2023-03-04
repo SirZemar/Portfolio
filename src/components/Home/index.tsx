@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // Components 
 import Ripple from "./Ripple";
 // Unique Id
@@ -12,6 +12,7 @@ import { pageWrapper as Wrapper } from "../../common/pageWrapper";
 import { Container } from "./Home.styles";
 import Stars from "./Stars";
 import Asteroids from "./Asteroids";
+
 
 export interface Coordenates {
     x: number;

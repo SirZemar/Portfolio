@@ -1,18 +1,27 @@
 import styled from "styled-components";
 import { LayoutProps } from "../../common/Layout";
 
-interface Props extends LayoutProps { }
+interface Props extends LayoutProps {
+    projectsCount?: number;
+}
 
 interface Project {
     backgroundUrl: string;
 }
 
+
 const color = '255, 0, 0';
 
 export const Container = styled.div<Props>`
     display: grid;
-    grid-template-columns: repeat(auto-fill, 10% );
+    grid-template-columns:repeat(${props => props.projectsCount}, minmax(80px, 8vw));
     background-color: rgb(${color}, 0);
+    
+
+    .project-skeleton {
+        transform: none;
+        aspect-ratio: 1/1;
+    }
 `
 
 export const Title = styled.div<Props>`
@@ -20,7 +29,7 @@ export const Title = styled.div<Props>`
 `
 
 export const Project = styled.div<Props & Project>`
-    background: url(${props => props.backgroundUrl});
+    background-image: url(${props => props.backgroundUrl});
     background-repeat: no-repeat ;
     background-size: cover;
     background-position: center;

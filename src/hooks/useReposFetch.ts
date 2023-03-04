@@ -5,6 +5,9 @@ export const useReposFetch = () => {
     const [repoNames, setRepoNames] = useState<string[]>([]);
     const [portfolioReposNames, setPortfolioReposNames] = useState<string[]>([]);
     const [repos, setRepos] = useState<string[]>();
+    const [loadingStatus, setLoadingStatus] = useState<any[]>();
+    const [reposCount, setReposCount] = useState<number>();
+
 
     useEffect(() => {
         const getAllRepos = async () => {
@@ -16,16 +19,43 @@ export const useReposFetch = () => {
     }, []);
 
     useEffect(() => {
+        function timeout(ms: number) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
         const getRepoReadme = async () => {
             try {
                 const reposPromise = portfolioReposNames.map(async name => await API.fetchRepoReadme(name));
-                const repos = await Promise.all(reposPromise);
-                setRepos(repos)
+                let reposLoading;
+                const reposArr: any = [];
+                while (reposPromise.length) {
+
+                    reposLoading = Array.from({ length: reposPromise.length }, () => true);
+                    console.log(reposLoading)
+                    setLoadingStatus(reposLoading);
+                    const repoIndex = await Promise.race(
+                        reposPromise.map((p, i) => p.then(() => i).catch(() => -1))
+                    );
+
+                    if (repoIndex === -1) break;
+
+                    reposLoading[repoIndex] = false;
+
+                    const repo = await reposPromise[repoIndex];
+
+                    reposPromise.splice(repoIndex, 1);
+                    reposLoading.splice(repoIndex, 1);
+                    setRepos([repo]);
+
+                    reposArr.push(repo);
+
+                    // await timeout(100);
+                }
+                setReposCount(reposArr.length);
+                console.log(reposLoading)
             } catch {
                 console.log('error')
             }
-            const a = await API.fetchRepoReadme('bedroom-rivals');
-            console.log(a)
         }
 
         getRepoReadme();
@@ -44,5 +74,5 @@ export const useReposFetch = () => {
         };
         getPortfolioRepos()
     }, [repoNames])
-    return { repos };
+    return { repos, loadingStatus, reposCount };
 }

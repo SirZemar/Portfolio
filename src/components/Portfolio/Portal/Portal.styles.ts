@@ -25,6 +25,7 @@ export const Footer = styled.footer<Props>`
     border-radius: 0 0 15px 15px;
     height: 50px;
     margin-top: -5px;
+    z-index: 1000;
 
     .button-container {
         margin-top: 5px;
@@ -41,6 +42,7 @@ export const Container = styled.div<Props>`
 
     img {
         width: 100%;
+        transition: 2s;
     }
 
     ::-webkit-scrollbar {
