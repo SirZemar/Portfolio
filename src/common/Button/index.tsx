@@ -1,14 +1,23 @@
 import React from "react";
 import { Container } from "./Button.styles";
-interface Props {
-    link: string,
+
+export enum Type {
+    SUBMIT = "submit",
+    LINK = "link",
 }
-export const Button: React.FC<Props> = ({ children, link }) => (
+interface Props {
+    type: Type,
+    link?: string,
+}
+export const Button: React.FC<Props> = ({ children, link, type }) => (
     <Container>
         <div className="button-container">
-            <a href={link} className='button' target='_blank' rel="noreferrer">
+            {type === Type.LINK && <a href={link} className='button' target='_blank' rel="noreferrer">
                 {children}
-            </a>
+            </a>}
+            {type === Type.SUBMIT && <button className='button' type="submit" >
+                {children}
+            </button>}
         </div>
     </Container>
 )

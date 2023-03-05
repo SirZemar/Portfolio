@@ -10,8 +10,16 @@ export const Header = styled.header<Props> `
     border-radius: 15px 15px 0 0;
     z-index: 100;
     padding: 10px;
+ 
     p{
         margin-bottom: 0;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    h1 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 2.5rem;
+        margin-bottom: 10px;
     }
 `
 

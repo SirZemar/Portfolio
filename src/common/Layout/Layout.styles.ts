@@ -14,6 +14,7 @@ export const Grid = styled.div`
     width: 100%;
     height: 100%;
     overflow: hidden;
+    gap: 50px;
 `
 
 export const GridItem = styled.div<Props>`

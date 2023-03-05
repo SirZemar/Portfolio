@@ -5,7 +5,7 @@ export const GlobalStyle = createGlobalStyle`
     --largeWidth: 1280px;
     --medWidth: 1000px;
     --base: #1f1f24;
-    --secondary: #656565
+    --secondary: #1c1c1c
     }
 
     * {
@@ -28,7 +28,13 @@ export const GlobalStyle = createGlobalStyle`
         text-decoration: none;   
     }
 
-    h1, h2, p {
+    h1, h2 {
         color: white;
+        font-family: 'Spline Sans', sans-serif;
+    }
+
+    p {
+        color: white;
+        font-family: monospace;
     }
 `

@@ -5,7 +5,7 @@ interface Props extends LayoutProps {
     projectsCount?: number;
 }
 
-interface Project {
+interface ProjectProps {
     backgroundUrl: string;
 }
 
@@ -28,7 +28,7 @@ export const Title = styled.div<Props>`
     
 `
 
-export const Project = styled.div<Props & Project>`
+export const Project = styled.div<Props & ProjectProps>`
     background-image: url(${props => props.backgroundUrl});
     background-repeat: no-repeat ;
     background-size: cover;

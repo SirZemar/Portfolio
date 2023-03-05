@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Background, Header, Footer } from "./Portal.styles";
 import { LayoutProps } from "../../../common/Layout";
 import { Project } from "../../../model/project";
-import { Button } from "../../../common/Button"
+import { Button, Type } from "../../../common/Button"
 
 interface Props extends LayoutProps {
     openModal: (boolean: boolean) => void;
@@ -22,7 +22,7 @@ const Portal: React.FC<Props> = ({ openModal, project }) => {
                 <img src={project.image} alt="project" />
             </Container>
             <Footer>
-                <Button link={project.website}>Check it out!</Button>
+                <Button type={Type.LINK} link={project.website}>Check it out!</Button>
             </Footer>
         </>
     )
