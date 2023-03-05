@@ -19,7 +19,7 @@ const Portal: React.FC<Props> = ({ openModal, project }) => {
 
             </Header>
             <Container>
-                <img src={project.image} />
+                <img src={project.image} alt="project" />
             </Container>
             <Footer>
                 <Button link={project.website}>Check it out!</Button>

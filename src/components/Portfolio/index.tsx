@@ -3,8 +3,6 @@ import Layout, { position, placement } from "../../common/Layout";
 import { pageWrapper as Wrapper } from "../../common/pageWrapper";
 import { Container, Title, Project } from "./Portfolio.styles";
 
-import { projectsData } from "../../images/mock";
-
 import Portal from "./Portal";
 import { Project as ProjectModel } from "../../model/project";
 import { useReposFetch } from "../../hooks/useReposFetch";
@@ -16,7 +14,7 @@ import filmstackerPage from "../../images/projects/images/filmstacker.png"
 import infomobiPage from "../../images/projects/images/infomobi.png"
 import eventurePage from "../../images/projects/images/eventure.png"
 
-import { Spinner } from "../../common/Spinner";
+// import { Spinner } from "../../common/Spinner";
 import { Skeleton } from '@mui/material';
 
 // Professional projects 
@@ -63,7 +61,7 @@ const Portfolio: React.FC = () => {
         if (loadingStatus ? loadingStatus.length >= 0 : false) {
             setLoadingProjects(loadingStatus);
         }
-    },)
+    }, [repos])
     useEffect(() => {
 
         repos?.forEach((repo, index) => {

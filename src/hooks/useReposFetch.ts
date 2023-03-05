@@ -19,9 +19,6 @@ export const useReposFetch = () => {
     }, []);
 
     useEffect(() => {
-        function timeout(ms: number) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        }
 
         const getRepoReadme = async () => {
             try {

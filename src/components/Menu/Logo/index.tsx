@@ -5,7 +5,7 @@ import { Container } from "./Logo.styles";
 const Logo: React.FC = () => (
     <Container>
         <Link className="logo" to='/'>
-            <img src="https://via.placeholder.com/80x100.png/09f/fff" />
+            <img src="https://via.placeholder.com/80x100.png/09f/fff" alt="logo" />
         </Link>
     </Container>
 )

@@ -6,7 +6,7 @@ interface Props {
 export const Button: React.FC<Props> = ({ children, link }) => (
     <Container>
         <div className="button-container">
-            <a href={link} className='button' target='_blank'>
+            <a href={link} className='button' target='_blank' rel="noreferrer">
                 {children}
             </a>
         </div>

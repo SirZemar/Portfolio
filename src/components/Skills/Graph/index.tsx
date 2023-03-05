@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Container, ProgressBar } from "./Graph.styles";
 // Types
 import { LayoutProps } from "../../../common/Layout";
