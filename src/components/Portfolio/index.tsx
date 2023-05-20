@@ -94,43 +94,62 @@ const Portfolio: React.FC = () => {
         setIsOpen(boolean);
     }
     return (
-        <Wrapper>
-            <Layout>
-                <Title position={position.topSlim} placement={placement.top}>
-                    <h1>My personal projects</h1>
-                </Title>
-                <Container projectsCount={3} position={position.top} placement={placement.center}>
-                    {reposInfo.map((project: ProjectModel, index) =>
-                        <Project key={index} onClick={() => openModal(true, project)} backgroundUrl={project.logo}></Project>
-                    )}
+      <Wrapper>
+        <Layout>
+          <Title position={position.topSlim} placement={placement.top}>
+            <h1>My personal projects</h1>
+          </Title>
+          <Container
+            projectsCount={3}
+            position={position.top}
+            placement={placement.center}
+          >
+            {reposInfo.map((project: ProjectModel, index) => (
+              <Project
+                key={index}
+                onClick={() => openModal(true, project)}
+                backgroundUrl={project.logo}
+              ></Project>
+            ))}
 
-                    {loadingProjects?.map((_, index) => {
-                        return (
-                            <Skeleton className="project-skeleton" key={index}></Skeleton>
-                        )
-                    })}
-
-                </Container>
-                <Title position={position.center} placement={placement.center}>
-                    <h1>My work experience</h1>
-                </Title>
-                <Container projectsCount={3} position={position.bottom} placement={placement.center}>
-
-                    {loadingStatus &&
-                        professionalProjects?.map((professionalProject, index) =>
-                            < Project key={index} onClick={() => openModal(true, professionalProject)} backgroundUrl={professionalProject.logo}></Project>
-                        )
-                    }
-                    {!loadingStatus &&
-                        professionalProjects?.map((_, index) =>
-                            <Skeleton className="project-skeleton" key={index}></Skeleton>
-                        )
-                    }
-                </Container>
-                {isOpen && <Portal openModal={openModal} position={position.centerWide} placement={placement.center} project={selectedProject}></Portal>}
-            </Layout>
-        </Wrapper >
-    )
+            {loadingProjects?.map((_, index) => {
+              return (
+                <Skeleton className="project-skeleton" key={index}></Skeleton>
+              );
+            })}
+          </Container>
+          <Title position={position.bottom} placement={placement.top}>
+            <h1>My work experience</h1>
+          </Title>
+          <Container
+            projectsCount={3}
+            position={position.bottom}
+            placement={placement.center}
+          >
+            {loadingStatus &&
+              professionalProjects?.map((professionalProject, index) => (
+                <Project
+                  key={index}
+                  onClick={() => openModal(true, professionalProject)}
+                  backgroundUrl={professionalProject.logo}
+                ></Project>
+              ))}
+            {!loadingStatus &&
+              professionalProjects?.map((_, index) => (
+                <Skeleton className="project-skeleton" key={index}></Skeleton>
+              ))}
+          </Container>
+          {isOpen && (
+            <Portal
+              openModal={openModal}
+              position={position.centerWide}
+              placement={placement.center}
+              project={selectedProject}
+            ></Portal>
+          )}
+        </Layout>
+      </Wrapper>
+    );
 }
 
 //https://raw.githubusercontent.com/SirZemar/one-cinema/master/README.md
