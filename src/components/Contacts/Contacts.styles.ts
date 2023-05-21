@@ -1,11 +1,10 @@
 import styled from "styled-components";
+import { LayoutProps } from "../../common/Layout";
 
-export const Container = styled.div`
+interface Props extends LayoutProps { }
+
+export const Container = styled.div<Props>`
 form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   background-color: #333;
   padding: 20px;
   border-radius: 10px;
@@ -25,6 +24,11 @@ textarea {
   font-family: monospace;
 }
 
+textarea{
+  flex-grow: 1;
+  height: clamp(150px, 30vh, 700px);
+  resize: none;
+}
 input[type="email"]:focus,
 input[type="text"]:focus,
 textarea:focus {
