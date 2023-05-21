@@ -49,15 +49,12 @@ export const Footer = styled.footer<Props>`
 `;
 export const Content = styled.div<Props>`
   position: relative;
-  /* height: clamp(400px, 60vh, 800px); */
   z-index: 100;
-  animation: anim 0.5s;
-  overflow-y: scroll;
   grid-area: b;
+  overflow-y: scroll;
 
   img {
     width: 100%;
-    transition: 2s;
   }
 
   ::-webkit-scrollbar {
@@ -74,15 +71,7 @@ export const Content = styled.div<Props>`
     border-radius: 15px;
     box-shadow: inset 0 0 2px black;
   }
-  // Temporary
-  @keyframes anim {
-    from {
-      opacity: 0.2;
-    }
-    to {
-      opacity: 1;
-    }
-  }
+ 
 `;
 
 export const Background = styled.div`
