@@ -13,6 +13,8 @@ import { Container } from "./Home.styles";
 import Stars from "./Stars";
 import Asteroids from "./Asteroids";
 
+import Layout, { position, placement } from "../../common/Layout";
+import Text from "../../common/Text";
 
 export interface Coordenates {
     x: number;
@@ -43,13 +45,22 @@ const Home: React.FC = () => {
     }
 
     return (
-        <Container onClick={handleClick}>
-            <Ripple coordenatesArray={mousePositionArray} setCoordenatesArray={setMoussePositionArray} paths={pathArray} />
-            <Wrapper>
-                <Stars />
-                <Asteroids />
-            </Wrapper>
-        </Container>
+        <>
+            <Layout>
+                <Text position={position.centerWide} placement={placement.topLeft}>
+                    <h1 style={{ fontSize: '4rem', padding: '40px' }}>Hi, my name is José Eduardo. I'm a Web Developer.</h1>
+                </Text>
+            </Layout >
+            {
+                false && <Container onClick={handleClick}>
+                    <Ripple coordenatesArray={mousePositionArray} setCoordenatesArray={setMoussePositionArray} paths={pathArray} />
+                    <Wrapper>
+                        <Stars />
+                        <Asteroids />
+                    </Wrapper>
+                </Container>
+            }
+        </>
     )
 
 };

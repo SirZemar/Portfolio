@@ -21,12 +21,11 @@ export const Header = styled.header<Props>`
   padding: 10px;
   grid-area: a;
   p {
+    font-size: 1rem;
     margin-bottom: 0;
-    font-family: "Roboto", sans-serif;
   }
 
   h1 {
-    font-family: "Montserrat", sans-serif;
     font-size: 2.5rem;
     margin-bottom: 10px;
   }

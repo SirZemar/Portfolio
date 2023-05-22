@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { GlobalStyle } from './GlobalStyles';
+import { FontStyles } from './FontStyles';
 import { Container } from './App.styles';
 // API
 import { useReposFetch } from "./hooks/useReposFetch";
@@ -24,7 +26,11 @@ const App: React.FC = () => {
 
   return (
     <Router >
+      <style>
+        @import url('https://fonts.cdnfonts.com/css/do-futuristic?styles=86197');
+      </style>
       <GlobalStyle />
+      <FontStyles />
       <Container>
         <Menu />
         <React.Suspense fallback={<h1>Page is loading........</h1>}>

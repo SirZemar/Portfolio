@@ -30,7 +30,7 @@ export const GlobalStyle = createGlobalStyle`
 
     h1, h2 {
         color: white;
-        font-family: 'Spline Sans', sans-serif;
+        font-family: 'Do Futuristic', 'Spline Sans', sans-serif;
     }
 
     p {

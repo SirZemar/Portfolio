@@ -18,7 +18,7 @@ export const Container = styled.div<Props>`
     padding: 0.35em 1.75em;
     color: transparent;
     font-size: 1.2rem;
-    font-family: "Montserrat", sans-serif;
+    font-family: 'Spline Sans', "Montserrat", sans-serif;
     font-weight: 500;
     letter-spacing: 1px;
     text-fill-color: transparent;
