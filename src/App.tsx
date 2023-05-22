@@ -11,6 +11,7 @@ import Menu from './components/Menu';
 import { Page404 } from "./components/Page404";
 // Lazy components
 const Home = React.lazy(() => import("./components/Home"));
+const Game = React.lazy(() => import("./components/Game"));
 const Contacts = React.lazy(() => import("./components/Contacts"));
 const About = React.lazy(() => import("./components/About"));
 const Skills = React.lazy(() => import("./components/Skills"));
@@ -40,6 +41,7 @@ const App: React.FC = () => {
         <React.Suspense fallback={<></>}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/game" element={<Game />} />
             <Route path="/about" element={<About />} />
             <Route path="/skills" element={<Skills />} />
             <Route path="/portfolio" element={<Portfolio />} />
