@@ -25,27 +25,27 @@ const App: React.FC = () => {
   }, [reposCount])
 
   return (
-    <Router >
+    <Router>
       <style>
-        @import url('https://fonts.cdnfonts.com/css/do-futuristic?styles=86197');
+        @import
+        url('https://fonts.cdnfonts.com/css/do-futuristic?styles=86197');
       </style>
       <GlobalStyle />
       <FontStyles />
       <Container>
         <Menu />
-        <React.Suspense fallback={<h1>Page is loading........</h1>}>
-          <Routes >
-            <Route path='/' element={<Home />} />
-            <Route path='/about' element={<About />} />
-            <Route path='/skills' element={<Skills />} />
-            <Route path='/portfolio' element={<Portfolio />} />
-            <Route path='/contacts' element={<Contacts />} />
+        <React.Suspense fallback={<></>}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/skills" element={<Skills />} />
+            <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/contacts" element={<Contacts />} />
           </Routes>
         </React.Suspense>
       </Container>
     </Router>
-
-  )
+  );
 }
 
 export default App;
