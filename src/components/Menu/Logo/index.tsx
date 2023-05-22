@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Container } from "./Logo.styles";
+import { Container, Image } from "./Logo.styles";
+
+import elogo from "../../../images/logo/elogo2.svg"
 
 const Logo: React.FC = () => (
     <Container>
         <Link className="logo" to='/'>
-            <img src="https://via.placeholder.com/80x100.png/09f/fff" alt="logo" />
+            <Image image={elogo}></Image>
         </Link>
     </Container>
 )
