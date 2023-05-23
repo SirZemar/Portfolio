@@ -1,13 +1,14 @@
 import React from "react";
-import { Button, Type } from "../../common/Button";
 import { pageWrapper as Wrapper } from "../../common/pageWrapper";
-import { Container } from "./Contacts.styles";
 import Layout, { placement, position } from "../../common/Layout";
-
-const Contacts: React.FC = () => (
+// Components
+import { Map } from "./Info.styles";
+import { Contact } from "./Info.styles";
+// import { Button, Type } from "../../common/Button";
+const Info: React.FC = () => (
     <Wrapper>
         <Layout>
-            <Container position={position.left} placement={placement.center}>
+            <Contact position={position.left} placement={placement.withAuto(placement.center, true)}>
                 <h1>Contact me!</h1>
                 <form action="https://formsubmit.co/855c3d45315da611a54590525e95b997" method="POST">
                     <input type="hidden" name="_subject" value="New submission!" ></input>
@@ -20,9 +21,15 @@ const Contacts: React.FC = () => (
                     <button type="submit">Send</button>
                     {/* <Button type={Type.SUBMIT}>Send</Button> */}
                 </form>
-            </Container>
+
+            </Contact>
+            <Map position={position.right} placement={placement.withAuto(placement.center, true)}>
+                <h1>Where I'm at!</h1>
+                {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48059.753045791454!2d-8.62195365!3d41.162142949999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd2465abc4e153c1%3A0xa648d95640b114bc!2sPorto!5e0!3m2!1spt-PT!2spt!4v1684860762925!5m2!1spt-PT!2spt" loading="lazy"></iframe> */}
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d58760.55743489346!2d-8.62195365!3d41.162142949999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1spt-PT!2spt!4v1684862220856!5m2!1spt-PT!2spt" loading="lazy" ></iframe>
+            </Map>
         </Layout>
     </Wrapper>
 )
 
-export default Contacts;
+export default Info;

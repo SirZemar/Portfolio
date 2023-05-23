@@ -12,7 +12,7 @@ import { Page404 } from "./components/Page404";
 // Lazy components
 const Home = React.lazy(() => import("./components/Home"));
 const Game = React.lazy(() => import("./components/Game"));
-const Contacts = React.lazy(() => import("./components/Contacts"));
+const Info = React.lazy(() => import("./components/Info"));
 const About = React.lazy(() => import("./components/About"));
 const Skills = React.lazy(() => import("./components/Skills"));
 const Portfolio = React.lazy(() => import("./components/Portfolio"));
@@ -45,7 +45,7 @@ const App: React.FC = () => {
             <Route path="/about" element={<About />} />
             <Route path="/skills" element={<Skills />} />
             <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/contacts" element={<Contacts />} />
+            <Route path="/info" element={<Info />} />
             <Route path="/*" element={<Page404 />} />
           </Routes>
         </React.Suspense>

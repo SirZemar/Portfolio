@@ -13,8 +13,8 @@ const Nav: React.FC = () => (
         <Link className="nav_list" to='/portfolio'>
             Portfolio
         </Link>
-        <Link className="nav_list" to='/contacts'>
-            Contacts
+        <Link className="nav_list" to='/info'>
+            Infos
         </Link>
     </Container>
 )
