@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+interface Props {
+    stars: string;
+    twinkling: string;
+}
+export const Container = styled.div<Props>`
     .stars, .twinkling {
       position:absolute;
       top:0;
@@ -10,13 +14,13 @@ export const Container = styled.div`
     }
 
     .stars {
-      background:#000 url(http://www.script-tutorials.com/demos/360/images/stars.png) repeat top center;
+      background:#000 url(${({ stars }) => stars}) repeat top center;
       z-index:-50;
       animation: show 2s ease-in;
     }
 
     .twinkling{
-      background:transparent url(http://www.script-tutorials.com/demos/360/images/twinkling.png) repeat top center;
+      background:transparent  url(${({ twinkling }) => twinkling}) repeat top center;
       z-index:-49;
       opacity: 0;
       animation:move-twink-back 40s linear infinite ;
@@ -46,5 +50,4 @@ export const Container = styled.div`
             opacity: 1;
         }
     }
-}
 `
