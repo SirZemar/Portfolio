@@ -66,11 +66,46 @@ Button {
 `
 
 export const Map = styled.div<Props>`
+  position: relative;
 
+.box-sign {
+  display: block;
+    background-color: #FF0F6C;
+    border-radius: 4px;
+    position: absolute;
+    width: 34px;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    cursor: pointer;
+    box-sizing: border-box;
+    z-index: 2;
+    border: 1px solid black;
+    font-size: 26px;
+    pointer-events: none;
+  }
+  .plus {
+    left: 10px;
+    top: 69px;
+    border-radius: 4px 4px 0 0;
+  }
+
+  .minus {
+    left: 10px;
+    top: 102px;
+    border-radius: 0 0 4px 4px;
+  }
   height: 60vh;
   iframe {
     width: 100%;
     height: 100%;
     border: none;
   }
+
+  iframe{
+    filter: invert(100%) grayscale(100%)
+  }
+
+  iframe .leaflet-control-zoom-in {
+      filter: none;
+    }
 `
