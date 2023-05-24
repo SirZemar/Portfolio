@@ -3,11 +3,14 @@ import styled from "styled-components";
 export const Container = styled.nav`
     align-self: center;
 
-    a.nav_list {
+    .nav_list {
         display: block;
         color: white;
         text-align: center;
-        border: 1px solid #f23fff;
         padding: 1rem;
     }
+
+    .nav_list.active {
+    box-shadow: 2px 0px 0px #FF0F6C;
+}
 `
