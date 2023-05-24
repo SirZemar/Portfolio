@@ -5,8 +5,12 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 
 const Social: React.FC = () => (
     <Container>
-        <LinkedInIcon />
-        <GitHubIcon />
+        <a href="https://www.linkedin.com/in/josé-marinho-11a621216/" target="_blank" rel="noreferrer">
+            <LinkedInIcon />
+        </a>
+        <a href="https://github.com/SirZemar" target="_blank" rel="noreferrer" >
+            <GitHubIcon />
+        </a>
     </Container>
 )
 
