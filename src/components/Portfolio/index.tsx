@@ -100,7 +100,7 @@ const Portfolio: React.FC = () => {
           <h1>My personal projects</h1>
         </Title>
         <Container
-          projectsCount={3}
+          projectsCount={4}
           position={position.top}
           placement={placement.center}
         >
