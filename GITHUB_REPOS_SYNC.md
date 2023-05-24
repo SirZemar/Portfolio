@@ -6,6 +6,10 @@ For a github project to be linked with my portofio they must follow these rules
 
 The repository must have a topic named "portfolio"
 
+## Logo image
+- Aspect ratio 1/1
+- Size 256px
+
 ## README.md
 
 Readme file must follow this template
