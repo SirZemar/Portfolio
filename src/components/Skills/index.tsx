@@ -11,7 +11,8 @@ const Skills: React.FC = () => (
         <Layout>
             <Text position={position.left} placement={placement.center}>
                 <h1>Skills</h1>
-                <p><span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta laudantium possimus id blanditiis quidem, quia enim sit provident hic reiciendis accusantium nihil iusto quisquam sequi perspiciatis fugit aspernatur ea velit?</span><span>Vitae quisquam officia nemo magnam natus accusantium necessitatibus ipsam officiis aliquam eligendi quaerat error placeat earum odio, tempora nam nostrum exercitationem assumenda. Deserunt molestiae beatae voluptatem nemo provident. Possimus, cum?</span><span>Quisquam perspiciatis non aliquam quasi illo tempora, incidunt dolorem dolore quod ab similique, eius suscipit pariatur. Unde eum atque doloribus, facilis nulla, maxime quisquam optio quis aperiam incidunt voluptatum soluta.</span></p>
+                <p>I have a versatile skill set that includes Angular, React, JavaScript, HTML, CSS, SCSS, Git, Node.js, MySQL, and C. These technologies enable me to develop dynamic and visually appealing web applications. With expertise in front-end frameworks and languages, I create responsive and engaging user interfaces and build robust and scalable server-side applications.</p>
+                <p>I am proficient in version control and collaboration using Git and I am comfortable working with APIs and integrating third-party services.In addictiuon, my knowledge of programming principles in C from school 42 enhances my problem-solving skills. I am passionate about leveraging these skills to create innovative web solutions.</p>
             </Text>
             <Graph position={position.right} placement={placement.withAuto(placement.center, true)} />
         </Layout>

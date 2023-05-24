@@ -16,13 +16,17 @@ export interface Coordenates {
 const Home: React.FC = () => (
   <Wrapper>
     <Layout>
-      <Container position={position.top} placement={placement.bottom}>
+      <Container position={position.centerWide} placement={placement.left}>
         <Text>
-          <h1 style={{ fontSize: "4rem", margin: "0" }}>
-            Hi, my name is José Eduardo. I'm a Web Developer.
+          <h1 style={{ fontSize: "4rem", margin: "0", letterSpacing: '2px' }}>
+            Hi, my name is </h1>
+          <h1 style={{ fontSize: "4rem", margin: "0", letterSpacing: '2px', paddingLeft: "60px", lineHeight: "80px" }}>
+            <span style={{ fontSize: '1.1em', color: 'red' }}>E</span>duardo Marinho. </h1>
+          <h1 style={{ fontSize: "4rem", margin: "0", letterSpacing: '2px', paddingLeft: "120px" }}>
+            I'm a Web Developer.
             <span style={{ display: "inline-block" }}>
               <Button type={Type.ROUTE} path="/game">
-                Save Earth
+                Danger
               </Button>
             </span>
           </h1>

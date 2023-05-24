@@ -10,7 +10,7 @@ interface Props extends LayoutProps { }
 const Portrait: React.FC<Props> = () => {
     return (
         <Container >
-            <img className="portrait-image" alt="Me" src={portraitImg} width="350" />
+            <img className="portrait-image" alt="Me" src={portraitImg} width="400" />
         </Container>
     )
 }
