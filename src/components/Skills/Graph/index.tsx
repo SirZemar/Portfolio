@@ -13,6 +13,7 @@ const skills = [
     { name: 'Angular', width: '70%' },
     { name: 'Firebase', width: '45%' },
     { name: 'AWS', width: '45%' },
+    { name: 'node.js', width: '65%' },
 ]
 
 const Graph: React.FC<Props> = () => {
