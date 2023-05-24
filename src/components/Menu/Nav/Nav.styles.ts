@@ -8,6 +8,7 @@ export const Container = styled.nav`
         color: white;
         text-align: center;
         padding: 1rem;
+        font-family: 'Inter', sans-serif
     }
 
     .nav_list.active {
