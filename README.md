@@ -10,6 +10,4 @@
 <p><description>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem quo doloremque iusto quae ea illo fugiat voluptatibus odit fuga possimus.</description></p>
 
 <hr>
-Access this project <a href="{{websiteUrl}}" target="_blank" website="<website>{{websiteUrl}}</website>" >Here</a>
-
-### <a href="https://sage-cendol-c74a7f.netlify.app/about" target="_blank">Click here to see my portfolio</a> :point_down:
+Access this project <a href="https://sage-cendol-c74a7f.netlify.app" target="_blank" website="<website>https://sage-cendol-c74a7f.netlify.app</website>" >Here</a> :point_down:
