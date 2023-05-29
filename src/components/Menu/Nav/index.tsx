@@ -21,7 +21,7 @@ const Nav: React.FC = () => {
                 Portfolio
             </NavLink >
             <NavLink className="nav_list" to='/info'>
-                Infos
+                Contact
             </NavLink >
         </Container>
     )
