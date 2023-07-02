@@ -7,7 +7,7 @@
 ![<image>https://github.com/SirZemar/Portfolio/assets/87383586/506bf471-1b97-417c-81d5-593d1d1d11b1</image>](https://github.com/SirZemar/Portfolio/assets/87383586/506bf471-1b97-417c-81d5-593d1d1d11b1)
 
 <h2> Introduction </h2>
-<p><description>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem quo doloremque iusto quae ea illo fugiat voluptatibus odit fuga possimus.</description></p>
+<p><description>Portfolio written in React. My personal projects are fetched dynamically from my GitHub profile.</description></p>
 
 <hr>
 Access this project <a href="https://sage-cendol-c74a7f.netlify.app" target="_blank" website="<website>https://sage-cendol-c74a7f.netlify.app</website>" >Here</a> :point_down:
