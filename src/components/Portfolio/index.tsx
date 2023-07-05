@@ -119,7 +119,7 @@ const Portfolio: React.FC = () => {
           })}
         </Container>
         <Title position={position.bottom} placement={placement.top}>
-          <h1>My work experience</h1>
+          <h2 className="fakeh1">My work experience</h2>
         </Title>
         <Container
           projectsCount={3}

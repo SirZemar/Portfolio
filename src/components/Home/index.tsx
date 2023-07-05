@@ -18,18 +18,19 @@ const Home: React.FC = () => (
     <Layout>
       <Container position={position.centerWide} placement={placement.left}>
         <Text>
-          <h1 style={{ fontSize: "4rem", margin: "0", letterSpacing: '2px' }}>
-            Hi, my name is </h1>
-          <h1 style={{ fontSize: "4rem", margin: "0", letterSpacing: '2px', paddingLeft: "60px", lineHeight: "80px" }}>
-            <span style={{ fontSize: '1.1em', color: 'red' }}>E</span>duardo Marinho. </h1>
-          <h1 style={{ fontSize: "4rem", margin: "0", letterSpacing: '2px', paddingLeft: "120px" }}>
+          <h1 className="line">Hi, my name is </h1>
+          <h2 className="line">
+            <span style={{ fontSize: "1.1em", color: "red" }}>E</span>duardo
+            Marinho.{" "}
+          </h2>
+          <h2 className="line">
             I'm a Web Developer.
             <span style={{ display: "inline-block" }}>
               <Button type={Type.ROUTE} path="/game">
                 Danger
               </Button>
             </span>
-          </h1>
+          </h2>
         </Text>
       </Container>
     </Layout>
