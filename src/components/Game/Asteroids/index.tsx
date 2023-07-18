@@ -4,11 +4,15 @@ import { Container } from './Asteroids.styles';
 import diffuse from '../../../images/asteroids/diffuse.png';
 import filter from '../../../images/asteroids/filter5.png';
 
-const Asteroids: React.FC = () => (
+const Asteroids: React.FC = () => {
+  //
+
+  return (
     <Container diffuse={diffuse} filter={filter}>
-        <div className="unit trajectory2"></div>
-        <div className="unit trajectory1"></div>
+      <div className="unit trajectory2"></div>
+      <div className="unit trajectory1"></div>
     </Container>
-)
+  );
+};
 
 export default Asteroids

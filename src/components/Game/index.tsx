@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Container } from "./Game.styles";
 
 // Components
@@ -15,12 +15,20 @@ import { pageWrapper as Wrapper } from "../../common/pageWrapper";
 import Stars from "./Stars";
 import Asteroids from "./Asteroids";
 
+import { useGameCountdown } from "../../hooks/useGameCountdown";
+
 export interface Coordenates {
   x: number;
   y: number;
   id: string;
 }
 const Game: React.FC = () => {
+  const { timer, intervalRef, gameIsOver } = useGameCountdown(10000);
+
+  useEffect(() => {
+    if (gameIsOver) alert("You are a hero! You saved our planet.");
+  }, [gameIsOver]);
+
   const [mousePositionArray, setMoussePositionArray] = useState<Coordenates[]>(
     []
   );
