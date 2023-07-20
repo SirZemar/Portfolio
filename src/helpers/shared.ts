@@ -35,3 +35,13 @@ export const getRandomIntFromInterval = (min: number, max: number) => {
 
   return randomNumber;
 };
+
+export const roundToDecimal = (
+  number: number,
+  numberOfDecimal: number
+): number => {
+  const poweredNumber = Math.pow(10, numberOfDecimal);
+  const result = Math.floor(number * poweredNumber) / poweredNumber;
+
+  return result;
+};
