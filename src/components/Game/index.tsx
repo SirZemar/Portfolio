@@ -8,7 +8,7 @@ import { v4 as uuid } from "uuid";
 // Paths
 import paths from "../../paths";
 // Shuffle
-import { shuffle } from "../../helpers";
+import { shuffle, getRandomIntFromInterval } from "../../helpers/shared";
 // Styles
 import { pageWrapper as Wrapper } from "../../common/pageWrapper";
 
@@ -23,10 +23,20 @@ export interface Coordenates {
   id: string;
 }
 const Game: React.FC = () => {
-  const { timer, intervalRef, gameIsOver } = useGameCountdown(10000);
+  const gameFullTime = 30000;
+  const gameTotalLevels = 5;
+  const { timer, intervalRef, gameIsOver } = useGameCountdown(gameFullTime);
+
+  console.log("Game rendered!");
 
   useEffect(() => {
-    if (gameIsOver) alert("You are a hero! You saved our planet.");
+    let timeout: NodeJS.Timeout;
+    if (gameIsOver) {
+      timeout = setTimeout(() => {
+        alert("You are a hero! You saved our planet.");
+      }, 3000);
+    }
+    return () => clearTimeout(timeout);
   }, [gameIsOver]);
 
   const [mousePositionArray, setMoussePositionArray] = useState<Coordenates[]>(
@@ -39,6 +49,7 @@ const Game: React.FC = () => {
     const x = e.pageX - offset;
     const y = e.pageY;
 
+    // Ripple child should be in charge of setting up the arrayy from the coordenates prop
     setMoussePositionArray(
       mousePositionArray.length > 0
         ? (prev) => [...prev, { x, y, id: uuid() }]
@@ -58,7 +69,14 @@ const Game: React.FC = () => {
       />
       <Wrapper>
         <Stars />
-        <Asteroids />
+        <Asteroids
+          timer={timer}
+          gameIsOver={gameIsOver}
+          configurations={{
+            fullTime: gameFullTime,
+            totalLevels: gameTotalLevels,
+          }}
+        />
       </Wrapper>
     </Container>
   );

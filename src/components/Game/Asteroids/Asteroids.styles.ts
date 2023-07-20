@@ -5,8 +5,7 @@ type Props = {
     filter: string;
 }
 export const Container = styled.div<Props>`
-
-.unit {
+  .unit {
     position: absolute;
     /* mix-blend-mode: lighten; */
     background-image: url(${({ filter }) => filter});
@@ -14,55 +13,66 @@ export const Container = styled.div<Props>`
     height: 75px;
     transform: scale(0.8);
     height: 75px;
-    display:block ;
-}
+    display: block;
+  }
 
-.trajectory1 {
+  .rotate1 {
+    animation: rotate 1s steps(22) infinite;
+  }
+
+  .rotate2 {
+    animation: rotate 2s steps(22) infinite;
+  }
+
+  .rotate3 {
+    animation: rotate 3s steps(22) infinite;
+  }
+
+  .trajectory1 {
     animation: rotate 2s steps(22) infinite, path 4s linear infinite;
-}
+  }
 
-.trajectory2 {
+  .trajectory2 {
     animation: rotate2 3s steps(22) infinite, path2 6s linear infinite;
-}
+  }
 
-@keyframes rotate {
+  @keyframes rotate {
     0% {
-        background-position: calc(75px * 1) calc(75px * 20);
+      background-position: calc(75px * 1) calc(75px * 20);
     }
     100% {
-        background-position: calc(75px * 23) calc(75px * 20);
+      background-position: calc(75px * 23) calc(75px * 20);
     }
-}
+  }
 
-@keyframes rotate2 {
+  @keyframes rotate2 {
     0% {
-        background-position: calc(75px * 1) calc(75px * 15);
+      background-position: calc(75px * 1) calc(75px * 15);
     }
     100% {
-        background-position: calc(75px * 23) calc(75px * 15);
+      background-position: calc(75px * 23) calc(75px * 15);
     }
-}
+  }
 
-@keyframes path {
+  @keyframes path {
     from {
-        left: 85%;
-        bottom:-10%;
+      left: 85%;
+      bottom: -10%;
     }
     to {
-        left: 0%;
-        bottom: 70%;
+      left: 0%;
+      bottom: 70%;
     }
-}
+  }
 
-@keyframes path2 {
+  @keyframes path2 {
     from {
-        left: 110%;
-        bottom:50%;
+      left: 110%;
+      bottom: 50%;
     }
     to {
-        left: 0%;
-        bottom: 50%;
+      left: 0%;
+      bottom: 50%;
     }
-}
-    
-`
+  }
+`;
