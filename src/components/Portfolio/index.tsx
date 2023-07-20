@@ -4,7 +4,7 @@ import { pageWrapper as Wrapper } from "../../common/pageWrapper";
 import { Container, Title, Project } from "./Portfolio.styles";
 
 import Portal from "./Portal";
-import { Project as ProjectModel } from "../../model/project";
+import { Project as ProjectModel } from "../../models/project";
 import { useReposFetch } from "../../hooks/useReposFetch";
 // Professional projects logos
 import eventureLogo from "../../images/projects/logos/eventure.png";

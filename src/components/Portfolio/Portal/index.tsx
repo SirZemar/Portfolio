@@ -7,7 +7,7 @@ import {
   Container,
 } from "./Portal.styles";
 import { LayoutProps } from "../../../common/Layout";
-import { Project } from "../../../model/project";
+import { Project } from "../../../models/project";
 import { Button, Type } from "../../../common/Button";
 import { LinearProgress } from "@mui/material";
 

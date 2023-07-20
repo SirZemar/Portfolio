@@ -10,11 +10,15 @@ export const useReposFetch = () => {
 
 
     useEffect(() => {
-        const getAllRepos = async () => {
+        try {
+          const getAllRepos = async () => {
             const reposList = await API.fetchAllRepos();
             setRepoNames(reposList.map((element: any): string => element.name));
+          };
+          getAllRepos();
+        } catch (error) {
+          console.log("Failed to fetch all repos: ", error);
         }
-        getAllRepos();
 
     }, []);
 
