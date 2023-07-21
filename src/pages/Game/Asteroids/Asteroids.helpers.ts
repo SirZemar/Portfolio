@@ -4,7 +4,7 @@ import {
   getRandomIntFromInterval,
   successByProbability,
   roundToDecimal,
-} from "./shared";
+} from "src/utils";
 
 enum Side {
   TOP = "top",
@@ -79,7 +79,7 @@ export const randomAsteroidSide = (): string => {
   }
 };
 
-export const getAsteroidNumberPerLevel = (
+export const getAsteroidsNumberPerLevel = (
   totalLevels: number
 ): AsteroidsModel.AsteroidsNumberPerLevel => {
   const asteroidNumberIncrementByLevel = 2;
@@ -159,7 +159,7 @@ export const getAsteroidDelay = (
   return { delay, newBaseTime };
 };
 
-export const getRandomRotation = (): string => {
+export const getAsteroidRandomRotation = (): string => {
   const rotationNumber = getRandomIntFromInterval(1, 3);
 
   return `rotate${rotationNumber}`;

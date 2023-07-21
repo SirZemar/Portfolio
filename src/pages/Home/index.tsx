@@ -1,6 +1,6 @@
 import React from "react";
 
-import { pageWrapper as Wrapper } from "../../common/pageWrapper";
+import { Wrapper } from "../../common/Wrapper";
 import { Container } from "./Home.styles";
 
 import Layout, { position, placement } from "../../common/Layout";

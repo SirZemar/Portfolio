@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout, { position, placement } from "../../common/Layout";
-import { pageWrapper as Wrapper } from "../../common/pageWrapper";
+import { Wrapper } from "../../common/Wrapper";
 import { Container, Title, Project } from "./Portfolio.styles";
 
 import Portal from "./Portal";
@@ -10,39 +10,41 @@ import { useReposFetch } from "../../hooks/useReposFetch";
 import eventureLogo from "../../images/projects/logos/eventure.png";
 import filmstakerLogo from "../../images/projects/logos/filmstacker.png";
 import infomobiLogo from "../../images/projects/logos/infomobi.jpg";
-import filmstackerPage from "../../images/projects/images/filmstacker.png"
-import infomobiPage from "../../images/projects/images/infomobi.png"
-import eventurePage from "../../images/projects/images/eventure.png"
+import filmstackerPage from "../../images/projects/images/filmstacker.png";
+import infomobiPage from "../../images/projects/images/infomobi.png";
+import eventurePage from "../../images/projects/images/eventure.png";
 
 // import { Spinner } from "../../common/Spinner";
-import { Skeleton } from '@mui/material';
+import { Skeleton } from "@mui/material";
 
-// Professional projects 
+// Professional projects
 const professionalProjects = [
   {
-    name: 'Filmstacker',
-    website: 'https://filmstacker.com',
+    name: "Filmstacker",
+    website: "https://filmstacker.com",
     logo: filmstakerLogo,
     image: filmstackerPage,
-    description: 'Filmstacker is a video platform that allows users to collaborate on creating short films. It is a complex project with a brilliant team of experienced software developers.'
+    description:
+      "Filmstacker is a video platform that allows users to collaborate on creating short films. It is a complex project with a brilliant team of experienced software developers.",
   },
   {
-    name: 'Eventure',
-    website: 'https://github.com/devizem/Eventure',
+    name: "Eventure",
+    website: "https://github.com/devizem/Eventure",
     logo: eventureLogo,
     image: eventurePage,
-    description: 'Eventure is a mobile app that helps users find and learn about traditional events around the world.'
+    description:
+      "Eventure is a mobile app that helps users find and learn about traditional events around the world.",
   },
   {
-    name: 'Infomobi',
-    website: 'https://infomobi.app',
+    name: "Infomobi",
+    website: "https://infomobi.app",
     logo: infomobiLogo,
     image: infomobiPage,
-    description: 'Infomobi is a mobile app that helps businesses collect feedback from employees and improve employee engagement.'
-  }
-]
+    description:
+      "Infomobi is a mobile app that helps businesses collect feedback from employees and improve employee engagement.",
+  },
+];
 const Portfolio: React.FC = () => {
-
   const [isOpen, setIsOpen] = useState(false);
   const [reposInfo, setReposInfo] = useState<any[]>([]);
   const { repos, loadingStatus } = useReposFetch();
@@ -50,26 +52,26 @@ const Portfolio: React.FC = () => {
   const [loadingProjects, setLoadingProjects] = useState<boolean[]>();
 
   useEffect(() => {
-    const reposCountLocalStorage = window.localStorage.getItem('reposLength');
-    const reposCountLocalStorageParsed = reposCountLocalStorage ? parseInt(reposCountLocalStorage) : 0;
-    const x = new Array(reposCountLocalStorageParsed).fill(true)
+    const reposCountLocalStorage = window.localStorage.getItem("reposLength");
+    const reposCountLocalStorageParsed = reposCountLocalStorage
+      ? parseInt(reposCountLocalStorage)
+      : 0;
+    const x = new Array(reposCountLocalStorageParsed).fill(true);
     setLoadingProjects(x);
-    console.log('asdadaddas', loadingProjects)
-  }, [])
+    console.log("asdadaddas", loadingProjects);
+  }, []);
 
   useEffect(() => {
     if (loadingStatus ? loadingStatus.length >= 0 : false) {
       setLoadingProjects(loadingStatus);
     }
-  }, [repos])
+  }, [repos]);
   useEffect(() => {
-
     repos?.forEach((repo, index) => {
-
       const markdown: any = {};
-      const tagNames = ['name', 'description', 'image', 'website', 'logo'];
+      const tagNames = ["name", "description", "image", "website", "logo"];
 
-      tagNames.forEach(tag => {
+      tagNames.forEach((tag) => {
         const markdownStart = `<${tag}>`;
         const markdownEnd = `</${tag}>`;
         const indexFirstTag = repo.indexOf(markdownStart);
@@ -78,21 +80,21 @@ const Portfolio: React.FC = () => {
 
         const substr = repo.substring(substrStart, substrEnd);
         markdown[tag] = substr;
-      })
-      console.log(markdown)
-      setReposInfo(prevReposInfo => [...prevReposInfo, markdown])
-      console.log(repo)
+      });
+      console.log(markdown);
+      setReposInfo((prevReposInfo) => [...prevReposInfo, markdown]);
+      console.log(repo);
     });
   }, [repos]);
 
   useEffect(() => {
-    console.log(reposInfo)
-  }, [reposInfo])
+    console.log(reposInfo);
+  }, [reposInfo]);
 
   const openModal = (boolean: boolean, project?: ProjectModel) => {
     if (project) setSelectedProject(project);
     setIsOpen(boolean);
-  }
+  };
   return (
     <Wrapper>
       <Layout>
@@ -150,9 +152,8 @@ const Portfolio: React.FC = () => {
       </Layout>
     </Wrapper>
   );
-}
+};
 
 //https://raw.githubusercontent.com/SirZemar/one-cinema/master/README.md
 
 export default Portfolio;
-

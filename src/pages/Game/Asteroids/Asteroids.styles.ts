@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 type Props = {
-    diffuse: string;
-    filter: string;
-}
+  diffuse: string;
+  filter: string;
+};
 export const Container = styled.div<Props>`
   .unit {
     position: absolute;

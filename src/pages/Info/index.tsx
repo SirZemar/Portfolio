@@ -1,5 +1,5 @@
 import React from "react";
-import { pageWrapper as Wrapper } from "../../common/pageWrapper";
+import { Wrapper } from "../../common/Wrapper";
 import Layout, { placement, position } from "../../common/Layout";
 // Components
 import { Map } from "./Info.styles";

@@ -7,15 +7,15 @@ import { Container } from './App.styles';
 // API
 import { useReposFetch } from "./hooks/useReposFetch";
 // Components
-import Menu from './components/Menu';
-import { Page404 } from "./components/Page404";
+import Menu from "./pages/Menu";
+import { Page404 } from "./pages/Page404";
 // Lazy components
-const Home = React.lazy(() => import("./components/Home"));
-const Game = React.lazy(() => import("./components/Game"));
-const Info = React.lazy(() => import("./components/Info"));
-const About = React.lazy(() => import("./components/About"));
-const Skills = React.lazy(() => import("./components/Skills"));
-const Portfolio = React.lazy(() => import("./components/Portfolio"));
+const Home = React.lazy(() => import("./pages/Home"));
+const Game = React.lazy(() => import("./pages/Game"));
+const Info = React.lazy(() => import("./pages/Info"));
+const About = React.lazy(() => import("./pages/About"));
+const Skills = React.lazy(() => import("./pages/Skills"));
+const Portfolio = React.lazy(() => import("./pages/Portfolio"));
 
 const App: React.FC = () => {
   const { reposCount } = useReposFetch();

@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "./Page404.styles";
 import Layout, { position, placement } from "../../common/Layout";
-import { pageWrapper as Wrapper } from "../../common/pageWrapper";
+import { Wrapper } from "../../common/Wrapper";
 
 interface Props {}
 export const Page404: React.FC<Props> = () => (

@@ -8,9 +8,9 @@ import { v4 as uuid } from "uuid";
 // Paths
 import paths from "../../paths";
 // Shuffle
-import { shuffle, getRandomIntFromInterval } from "../../helpers/shared";
+import { shuffle, getRandomIntFromInterval } from "../../utils";
 // Styles
-import { pageWrapper as Wrapper } from "../../common/pageWrapper";
+import { Wrapper } from "../../common/Wrapper";
 
 import Stars from "./Stars";
 import Asteroids from "./Asteroids";

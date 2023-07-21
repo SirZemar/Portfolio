@@ -3,25 +3,19 @@ import { Container } from "./Asteroids.styles";
 // Images
 import diffuse from "../../../images/asteroids/diffuse.png";
 import filter from "../../../images/asteroids/filter5.png";
-// Animation
-import { motion } from "framer-motion";
-import {
-  getRandomIntFromInterval,
-  roundToDecimal,
-  successByProbability,
-} from "../../../helpers/shared";
-// model
+// Models
 import { AsteroidsModel } from "@models";
-import { asteroidsMock } from "./asteroids.mock";
-import { AsteroidDelay } from "src/models/asteroids";
+// Helpers
 import {
-  getAsteroidNumberPerLevel,
+  getAsteroidsNumberPerLevel,
   getAsteroidsTimeGapPerLevel,
   getAsteroidsWindowTimePerLevel,
   getRandomPath,
   getAsteroidDelay,
-  getRandomRotation,
-} from "src/helpers/asteroids";
+  getAsteroidRandomRotation,
+} from "./Asteroids.helpers";
+import AsteroidMotion from "./Asteroids.motion";
+
 interface Props {
   timer: number;
   gameIsOver: boolean;
@@ -37,7 +31,7 @@ const Asteroids: React.FC<Props> = ({ timer, gameIsOver, configurations }) => {
   const [asteroids, setAsteroids] = useState<AsteroidsModel.Asteroid[]>([]);
 
   useEffect(() => {
-    const asteroidsNumberPerLevel = getAsteroidNumberPerLevel(
+    const asteroidsNumberPerLevel = getAsteroidsNumberPerLevel(
       configurations.totalLevels
     );
     const asteroidsTimeGapPerLevel = getAsteroidsTimeGapPerLevel(
@@ -70,7 +64,7 @@ const Asteroids: React.FC<Props> = ({ timer, gameIsOver, configurations }) => {
 
         baseTime = newBaseTime;
 
-        const rotation = getRandomRotation();
+        const rotation = getAsteroidRandomRotation();
 
         const asteroid: AsteroidsModel.Asteroid = {
           id: `${level}-${asteroidIndex}`,
@@ -88,26 +82,10 @@ const Asteroids: React.FC<Props> = ({ timer, gameIsOver, configurations }) => {
     <Container diffuse={diffuse} filter={filter}>
       {asteroids.map((asteroid) => {
         return (
-          <motion.div
-            className={`unit ${asteroid.rotation}`}
-            initial={{
-              left: asteroid.path.from.left,
-              top: asteroid.path.from.top,
-              bottom: asteroid.path.from.bottom,
-            }}
-            animate={{
-              left: asteroid.path.to.left,
-              top: asteroid.path.to.top,
-              bottom: asteroid.path.to.bottom,
-              transition: {
-                duration: 3,
-                ease: "linear",
-                delay: asteroid.delay,
-              },
-            }}
+          <AsteroidMotion
             key={asteroid.id}
-            onAnimationComplete={() => {}}
-          ></motion.div>
+            asteroid={asteroid}
+          ></AsteroidMotion>
         );
       })}
     </Container>
