@@ -19,7 +19,10 @@
     // "emitDeclarationOnly": true,
     // "declarationMap": true,
     "baseUrl": ".",
-    "paths": { "@models": ["src/models"] }
+    "paths": {
+      "@models": ["src/models"],
+      "@images": ["src/images"]
+    }
   },
   "include": ["src"]
 }
