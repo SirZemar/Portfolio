@@ -2,7 +2,9 @@ export interface Asteroid {
   id: string;
   delay: number;
   path: Path;
-  rotation: string;
+  rotationSpeed: number;
+  pathSpeed: number;
+  rockType: number;
 }
 
 export interface Path {

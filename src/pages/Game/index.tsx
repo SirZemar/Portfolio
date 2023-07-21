@@ -8,12 +8,12 @@ import { v4 as uuid } from "uuid";
 // Paths
 import paths from "../../paths";
 // Shuffle
-import { shuffle, getRandomIntFromInterval } from "../../utils";
+import { shuffle } from "../../utils";
 // Styles
 import { Wrapper } from "../../common/Wrapper";
 
 import Stars from "./Stars";
-import Asteroids from "./Asteroids";
+import AsteroidCluster from "./AsteroidCluster";
 
 import { useGameCountdown } from "../../hooks/useGameCountdown";
 
@@ -69,7 +69,7 @@ const Game: React.FC = () => {
       />
       <Wrapper>
         <Stars />
-        <Asteroids
+        <AsteroidCluster
           timer={timer}
           gameIsOver={gameIsOver}
           configurations={{

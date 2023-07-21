@@ -1,12 +1,12 @@
 import { AsteroidsModel } from "@models";
-import { AsteroidDelay } from "src/models/asteroids";
+
 import {
   getRandomIntFromInterval,
   successByProbability,
   roundToDecimal,
 } from "src/utils";
 
-enum Side {
+export enum AsteroidOriginSide {
   TOP = "top",
   BOTTOM = "bottom",
   RIGHT = "right",
@@ -17,15 +17,15 @@ interface Configurations {
   totalLevels: number;
 }
 
-export const getRandomPath = (): AsteroidsModel.Path => {
+export const getAsteroidRandomPath = (): AsteroidsModel.Path => {
   const from: AsteroidsModel.PathFrom = { left: "", top: "", bottom: "" };
   const to: AsteroidsModel.PathTo = { left: "", top: "", bottom: "" };
-  const side = randomAsteroidSide();
+  const side = getAsteroidRandomOriginSide();
 
   let path = {} as AsteroidsModel.Path;
 
   switch (side) {
-    case Side.TOP:
+    case AsteroidOriginSide.TOP:
       from.left = `${getRandomIntFromInterval(85, 100)}%`;
       from.bottom = "100%";
       from.top = "Auto";
@@ -34,7 +34,7 @@ export const getRandomPath = (): AsteroidsModel.Path => {
       to.bottom = `${getRandomIntFromInterval(0, 80)}%`;
 
       break;
-    case Side.BOTTOM:
+    case AsteroidOriginSide.BOTTOM:
       from.left = `${getRandomIntFromInterval(85, 100)}%`;
       from.top = "100%";
       from.bottom = "Auto";
@@ -43,22 +43,34 @@ export const getRandomPath = (): AsteroidsModel.Path => {
       to.top = `${getRandomIntFromInterval(0, 80)}%`;
 
       break;
-    case Side.RIGHT:
+    case AsteroidOriginSide.RIGHT:
       from.left = "100%";
       to.left = "0";
 
-      const verticalSide = successByProbability(50) ? Side.TOP : Side.BOTTOM;
+      const verticalSide = successByProbability(50)
+        ? AsteroidOriginSide.TOP
+        : AsteroidOriginSide.BOTTOM;
 
       const verticalRandomStart = getRandomIntFromInterval(0, 100);
       const verticalRandomEnd = getRandomIntFromInterval(0, 100);
 
       from.bottom =
-        verticalSide === Side.BOTTOM ? `${verticalRandomStart}%` : "Auto";
-      from.top = verticalSide === Side.TOP ? `${verticalRandomStart}%` : "Auto";
+        verticalSide === AsteroidOriginSide.BOTTOM
+          ? `${verticalRandomStart}%`
+          : "Auto";
+      from.top =
+        verticalSide === AsteroidOriginSide.TOP
+          ? `${verticalRandomStart}%`
+          : "Auto";
 
       to.bottom =
-        verticalSide === Side.BOTTOM ? `${verticalRandomEnd}%` : "Auto";
-      to.top = verticalSide === Side.TOP ? `${verticalRandomEnd}%` : "Auto";
+        verticalSide === AsteroidOriginSide.BOTTOM
+          ? `${verticalRandomEnd}%`
+          : "Auto";
+      to.top =
+        verticalSide === AsteroidOriginSide.TOP
+          ? `${verticalRandomEnd}%`
+          : "Auto";
 
       break;
   }
@@ -69,13 +81,13 @@ export const getRandomPath = (): AsteroidsModel.Path => {
   return path;
 };
 
-export const randomAsteroidSide = (): string => {
+export const getAsteroidRandomOriginSide = (): string => {
   if (successByProbability(50)) {
-    return Side.RIGHT;
+    return AsteroidOriginSide.RIGHT;
   } else if (successByProbability(50)) {
-    return Side.BOTTOM;
+    return AsteroidOriginSide.BOTTOM;
   } else {
-    return Side.TOP;
+    return AsteroidOriginSide.TOP;
   }
 };
 
@@ -137,13 +149,13 @@ export const getAsteroidsWindowTimePerLevel = (
   return asteroidsWindowTimePerLevel;
 };
 
-export const getAsteroidDelay = (
+export const getAsteroidRandomDelay = (
   level: number,
   asteroidIndex: number,
   baseTime: number,
   asteroidsTimeGapPerLevel: AsteroidsModel.AsteroidsNumberPerLevel,
   asteroidsWindowTimePerLevel: AsteroidsModel.AsteroidsNumberPerLevel
-): AsteroidDelay => {
+): AsteroidsModel.AsteroidDelay => {
   if (asteroidIndex + level != 0) {
     baseTime +=
       asteroidsTimeGapPerLevel[level] + asteroidsWindowTimePerLevel[level];
@@ -159,8 +171,79 @@ export const getAsteroidDelay = (
   return { delay, newBaseTime };
 };
 
-export const getAsteroidRandomRotation = (): string => {
-  const rotationNumber = getRandomIntFromInterval(1, 3);
+export const getAsteroidRandomPathSpeed = (): number => {
+  const randomNumber = getRandomIntFromInterval(1, 100);
+  let randomSpeed = 0;
+  if (randomNumber >= 1 && randomNumber <= 5) {
+    randomSpeed = getRandomIntFromInterval(20, 24);
+  } else if (randomNumber > 5 && randomNumber <= 20) {
+    randomSpeed = getRandomIntFromInterval(25, 29);
+  } else if (randomNumber > 20 && randomNumber <= 80) {
+    randomSpeed = getRandomIntFromInterval(30, 39);
+  } else if (randomNumber > 60 && randomNumber <= 95) {
+    randomSpeed = getRandomIntFromInterval(40, 49);
+  } else if (randomNumber > 95 && randomNumber <= 100) {
+    randomSpeed = getRandomIntFromInterval(50, 60);
+  }
 
-  return `rotate${rotationNumber}`;
+  randomSpeed /= 10;
+
+  return randomSpeed;
+};
+
+export const getAsteroidRandomRotationSpeed = (): number => {
+  const rotationSpeed = getRandomIntFromInterval(10, 30) / 10;
+
+  return rotationSpeed;
+};
+
+export const getAsteroidRandomRockType = (): number => {
+  const rockType = getRandomIntFromInterval(0, 8);
+
+  return rockType;
+};
+
+export const getAsteroids = (
+  configurations: Configurations,
+  asteroidsTimeGapPerLevel: AsteroidsModel.AsteroidsNumberPerLevel,
+  asteroidsWindowTimePerLevel: AsteroidsModel.AsteroidsNumberPerLevel,
+  asteroidsNumberPerLevel: AsteroidsModel.AsteroidsNumberPerLevel
+) => {
+  let baseTime = 0;
+  const asteroids = [] as AsteroidsModel.Asteroid[];
+
+  for (let level = 0; level < configurations.totalLevels; level++) {
+    for (
+      let asteroidIndex = 0;
+      asteroidIndex < asteroidsNumberPerLevel[level];
+      asteroidIndex++
+    ) {
+      const path = getAsteroidRandomPath();
+      const pathSpeed = getAsteroidRandomPathSpeed();
+
+      const { delay, newBaseTime } = getAsteroidRandomDelay(
+        level,
+        asteroidIndex,
+        baseTime,
+        asteroidsTimeGapPerLevel,
+        asteroidsWindowTimePerLevel
+      );
+
+      baseTime = newBaseTime;
+
+      const rotationSpeed = getAsteroidRandomRotationSpeed();
+      const rockType = getAsteroidRandomRockType();
+
+      const asteroid: AsteroidsModel.Asteroid = {
+        id: `${level}-${asteroidIndex}`,
+        path,
+        delay,
+        rotationSpeed,
+        pathSpeed,
+        rockType,
+      };
+      asteroids.push(asteroid);
+    }
+  }
+  return asteroids;
 };

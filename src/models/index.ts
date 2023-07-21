@@ -1,1 +1,1 @@
-export * as AsteroidsModel from "./asteroids";
+export * as AsteroidsModel from "./asteroids.types";
