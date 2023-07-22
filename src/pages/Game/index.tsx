@@ -16,6 +16,7 @@ import Stars from "./Stars";
 import AsteroidCluster from "./AsteroidCluster";
 
 import { useGameCountdown } from "../../hooks/useGameCountdown";
+import { Planet } from "./Planet";
 
 export interface Coordenates {
   x: number;
@@ -26,6 +27,7 @@ const Game: React.FC = () => {
   const gameFullTime = 30000;
   const gameTotalLevels = 5;
   const { timer, intervalRef, gameIsOver } = useGameCountdown(gameFullTime);
+  const [gameStarted, setGameStarted] = useState(false);
 
   console.log("Game rendered!");
 
@@ -77,6 +79,7 @@ const Game: React.FC = () => {
             totalLevels: gameTotalLevels,
           }}
         />
+        <Planet gameStarted={gameStarted} />
       </Wrapper>
     </Container>
   );

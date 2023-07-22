@@ -47,14 +47,16 @@ const AsteroidCluster: React.FC<Props> = ({
       asteroidsWindowTimePerLevel,
       asteroidsNumberPerLevel
     );
-
-    // Delay to start the game after routing to game page
-    const timeout = setTimeout(() => {
-      setAsteroids(asteroids);
-    }, 3000);
+    let timeout: NodeJS.Timeout;
+    if (!gameIsOver) {
+      // Delay to start the game after routing to game page
+      timeout = setTimeout(() => {
+        setAsteroids(asteroids);
+      }, 3000);
+    }
 
     return () => clearTimeout(timeout);
-  }, []);
+  }, [gameIsOver]);
 
   return (
     <Container>
