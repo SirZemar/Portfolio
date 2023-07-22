@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "./Button.styles";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export enum Type {
   SUBMIT = "submit",
@@ -26,9 +26,9 @@ export const Button: React.FC<Props> = ({ children, link, type, path }) => (
         </button>
       )}
       {type === Type.ROUTE && (
-        <a href={path} className="button" rel="noreferrer">
+        <NavLink className={"button"} to={"game"}>
           {children}
-        </a>
+        </NavLink>
       )}
     </div>
   </Container>
