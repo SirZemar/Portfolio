@@ -34,7 +34,7 @@ const Game: React.FC = () => {
     if (gameIsOver) {
       timeout = setTimeout(() => {
         alert("You are a hero! You saved our planet.");
-      }, 3000);
+      }, 6000);
     }
     return () => clearTimeout(timeout);
   }, [gameIsOver]);
