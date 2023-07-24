@@ -1,6 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 
-export const useGameCountdown = (timeMiliseconds: number) => {
+export const useGameCountdown = (
+  timeMiliseconds: number,
+  gameStarted: boolean
+) => {
   const [gameIsOver, setGameIsOver] = useState(false);
   const [timer, setTimer] = useState(timeMiliseconds);
   let intervalRef = useRef<any>();
@@ -10,14 +13,16 @@ export const useGameCountdown = (timeMiliseconds: number) => {
   };
 
   useEffect(() => {
-    const miliseconds = 1000;
-    intervalRef.current = setInterval(
-      () => decreaseTimer(miliseconds),
-      miliseconds
-    );
+    if (gameStarted) {
+      const miliseconds = 1000;
+      intervalRef.current = setInterval(
+        () => decreaseTimer(miliseconds),
+        miliseconds
+      );
 
-    return () => clearInterval(intervalRef.current);
-  }, []);
+      return () => clearInterval(intervalRef.current);
+    }
+  }, [gameStarted]);
 
   useEffect(() => {
     console.log("Countdown: ", timer);

@@ -26,8 +26,12 @@ export interface Coordenates {
 const Game: React.FC = () => {
   const gameFullTime = 30000;
   const gameTotalLevels = 5;
-  const { timer, intervalRef, gameIsOver } = useGameCountdown(gameFullTime);
   const [gameStarted, setGameStarted] = useState(false);
+
+  const { timer, intervalRef, gameIsOver } = useGameCountdown(
+    gameFullTime,
+    gameStarted
+  );
 
   console.log("Game rendered!");
 
@@ -78,6 +82,7 @@ const Game: React.FC = () => {
             fullTime: gameFullTime,
             totalLevels: gameTotalLevels,
           }}
+          gameStarted={gameStarted}
         />
         <Planet gameStarted={gameStarted} />
       </Wrapper>

@@ -15,6 +15,7 @@ interface Props {
   timer: number;
   gameIsOver: boolean;
   configurations: Configurations;
+  gameStarted: boolean;
 }
 
 interface Configurations {
@@ -26,6 +27,7 @@ const AsteroidCluster: React.FC<Props> = ({
   timer,
   gameIsOver,
   configurations,
+  gameStarted,
 }) => {
   const [asteroids, setAsteroids] = useState<AsteroidsModel.Asteroid[]>([]);
 
@@ -48,7 +50,7 @@ const AsteroidCluster: React.FC<Props> = ({
       asteroidsNumberPerLevel
     );
     let timeout: NodeJS.Timeout;
-    if (!gameIsOver) {
+    if (gameStarted) {
       // Delay to start the game after routing to game page
       timeout = setTimeout(() => {
         setAsteroids(asteroids);
@@ -56,7 +58,7 @@ const AsteroidCluster: React.FC<Props> = ({
     }
 
     return () => clearTimeout(timeout);
-  }, [gameIsOver]);
+  }, [gameStarted]);
 
   return (
     <Container>
