@@ -2,33 +2,46 @@ import React from "react";
 import { Container } from "./Button.styles";
 import { Link, NavLink } from "react-router-dom";
 
-export enum Type {
+export enum ButtonType {
   SUBMIT = "submit",
   LINK = "link",
   ROUTE = "route",
+  CALLBACK = "callback",
 }
 interface Props {
-  type: Type;
+  type: ButtonType;
   link?: string;
   path?: string;
+  fun?: () => any;
 }
-export const Button: React.FC<Props> = ({ children, link, type, path }) => (
+export const Button: React.FC<Props> = ({
+  children,
+  link,
+  type,
+  path,
+  fun,
+}) => (
   <Container>
     <div className="button-container">
-      {type === Type.LINK && (
+      {type === ButtonType.LINK && (
         <a href={link} className="button" target="_blank" rel="noreferrer">
           {children}
         </a>
       )}
-      {type === Type.SUBMIT && (
-        <button className="button" type="submit">
+      {type === ButtonType.SUBMIT && (
+        <button className="button" type={ButtonType.SUBMIT}>
           {children}
         </button>
       )}
-      {type === Type.ROUTE && (
+      {type === ButtonType.ROUTE && (
         <NavLink className={"button"} to={"game"}>
           {children}
         </NavLink>
+      )}
+      {type === ButtonType.CALLBACK && (
+        <button className="button" onClick={fun}>
+          {children}
+        </button>
       )}
     </div>
   </Container>

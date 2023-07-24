@@ -5,7 +5,7 @@ import { Container } from "./Home.styles";
 
 import Layout, { position, placement } from "../../common/Layout";
 import Text from "../../common/Text";
-import { Button, Type } from "../../common/Button";
+import { Button, ButtonType } from "../../common/Button";
 
 export interface Coordenates {
   x: number;
@@ -26,7 +26,7 @@ const Home: React.FC = () => (
           <h2 className="line">
             I'm a Web Developer.
             <span style={{ display: "inline-block" }}>
-              <Button type={Type.ROUTE} path="/game">
+              <Button type={ButtonType.ROUTE} path="/game">
                 Danger
               </Button>
             </span>

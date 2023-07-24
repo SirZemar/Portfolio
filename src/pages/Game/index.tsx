@@ -17,6 +17,7 @@ import AsteroidCluster from "./AsteroidCluster";
 
 import { useGameCountdown } from "../../hooks/useGameCountdown";
 import { Planet } from "./Planet";
+import { Button, ButtonType } from "src/common/Button";
 
 export interface Coordenates {
   x: number;
@@ -50,24 +51,25 @@ const Game: React.FC = () => {
   );
   const [pathArray, setPathArray] = useState<string[]>([]);
 
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const offset = e.currentTarget.getBoundingClientRect().x;
-    const x = e.pageX - offset;
-    const y = e.pageY;
+  // const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  //   const offset = e.currentTarget.getBoundingClientRect().x;
+  //   const x = e.pageX - offset;
+  //   const y = e.pageY;
 
-    // Ripple child should be in charge of setting up the arrayy from the coordenates prop
-    setMoussePositionArray(
-      mousePositionArray.length > 0
-        ? (prev) => [...prev, { x, y, id: uuid() }]
-        : [{ x, y, id: uuid() }]
-    );
+  //   // Ripple child should be in charge of setting up the arrayy from the coordenates prop
+  //   setMoussePositionArray(
+  //     mousePositionArray.length > 0
+  //       ? (prev) => [...prev, { x, y, id: uuid() }]
+  //       : [{ x, y, id: uuid() }]
+  //   );
 
-    const newPaths = shuffle(paths);
+  //   const newPaths = shuffle(paths);
 
-    setPathArray(newPaths);
-  };
+  //   setPathArray(newPaths);
+  // };
   return (
-    <Container onClick={handleClick}>
+    // Container onClick={handleClick}
+    <Container>
       <Ripple
         coordenatesArray={mousePositionArray}
         setCoordenatesArray={setMoussePositionArray}
@@ -85,6 +87,11 @@ const Game: React.FC = () => {
           gameStarted={gameStarted}
         />
         <Planet gameStarted={gameStarted} />
+        {!gameStarted && (
+          <Button type={ButtonType.CALLBACK} fun={() => setGameStarted(true)}>
+            Start
+          </Button>
+        )}
       </Wrapper>
     </Container>
   );

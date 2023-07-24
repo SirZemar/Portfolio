@@ -8,7 +8,7 @@ import {
 } from "./Portal.styles";
 import { LayoutProps } from "../../../common/Layout";
 import { Project } from "../../../models/project";
-import { Button, Type } from "../../../common/Button";
+import { Button, ButtonType } from "../../../common/Button";
 import { LinearProgress } from "@mui/material";
 
 interface Props extends LayoutProps {
@@ -78,14 +78,38 @@ const Portal: React.FC<Props> = ({ openModal, project }) => {
           <h1>{project.name}</h1>
           <p>{project.description}</p>
         </Header>
-        {!loaded && <LinearProgress value={imageProgress} variant="determinate" color="error" style={{ height: "12px", gridArea: 'b' }} />}
-        {!loading && <Content>
-          <div style={!loaded ? { height: '0px' } : { height: imageHeight, transition: `${transitionTime} ease-in` }} >
-            <img ref={imageRef} style={!loaded ? { height: '0px' } : { display: 'block' }} onLoad={() => setImageProgress(100)} src={project.image} alt="project" />
-          </div>
-        </Content>}
+        {!loaded && (
+          <LinearProgress
+            value={imageProgress}
+            variant="determinate"
+            color="error"
+            style={{ height: "12px", gridArea: "b" }}
+          />
+        )}
+        {!loading && (
+          <Content>
+            <div
+              style={
+                !loaded
+                  ? { height: "0px" }
+                  : {
+                      height: imageHeight,
+                      transition: `${transitionTime} ease-in`,
+                    }
+              }
+            >
+              <img
+                ref={imageRef}
+                style={!loaded ? { height: "0px" } : { display: "block" }}
+                onLoad={() => setImageProgress(100)}
+                src={project.image}
+                alt="project"
+              />
+            </div>
+          </Content>
+        )}
         <Footer>
-          <Button type={Type.LINK} link={project.website}>
+          <Button type={ButtonType.LINK} link={project.website}>
             Check it out!
           </Button>
         </Footer>
