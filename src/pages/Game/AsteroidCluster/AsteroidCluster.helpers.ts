@@ -226,7 +226,7 @@ export const getAsteroids = (
   asteroidsWindowTimePerLevel: AsteroidsModel.AsteroidsNumberPerLevel,
   asteroidsNumberPerLevel: AsteroidsModel.AsteroidsNumberPerLevel
 ) => {
-  let baseTime = 0;
+  let baseTime = 3000;
   const asteroids = [] as AsteroidsModel.Asteroid[];
 
   for (let level = 0; level < configurations.totalLevels; level++) {
