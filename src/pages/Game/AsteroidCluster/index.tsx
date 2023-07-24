@@ -43,12 +43,14 @@ const AsteroidCluster: React.FC<Props> = ({
       configurations,
       asteroidsNumberPerLevel
     );
+
     const asteroids = getAsteroids(
       configurations,
       asteroidsTimeGapPerLevel,
       asteroidsWindowTimePerLevel,
       asteroidsNumberPerLevel
     );
+
     let timeout: NodeJS.Timeout;
     if (gameStarted) {
       // Delay to start the game after routing to game page

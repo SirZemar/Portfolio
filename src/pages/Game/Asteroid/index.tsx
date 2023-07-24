@@ -5,6 +5,7 @@ import { AsteroidsModel } from "@models";
 import { asteroidType } from "../../../images";
 
 import { AsteroidMotion } from "./Asteroid.motion.styles";
+import { AsteroidState } from "../AsteroidCluster/AsteroidCluster.helpers";
 interface Props {
   asteroid: AsteroidsModel.Asteroid;
 }
@@ -38,7 +39,13 @@ const Asteroid: React.FC<Props> = ({ asteroid }) => (
       },
     }}
     key={asteroid.id}
-    onAnimationComplete={() => {}}
+    onAnimationComplete={() => {
+      if (asteroid.impactRoute) {
+        asteroid.state = AsteroidState.IMPACT;
+      } else {
+        asteroid.state = AsteroidState.MISSED;
+      }
+    }}
   ></AsteroidMotion>
 );
 export default Asteroid;

@@ -5,6 +5,8 @@ export interface Asteroid {
   rotationSpeed: number;
   pathSpeed: number;
   rockType: number;
+  state: string;
+  impactRoute: boolean;
 }
 
 export interface Path {

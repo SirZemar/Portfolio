@@ -6,10 +6,18 @@ import {
   roundToDecimal,
 } from "src/utils";
 
-export enum AsteroidOriginSide {
+enum AsteroidOriginSide {
   TOP = "top",
   BOTTOM = "bottom",
   RIGHT = "right",
+}
+
+export enum AsteroidState {
+  IDLE = "idle",
+  APPROUCHING = "approuching",
+  DESTROYED = "destroyed",
+  IMPACT = "impact",
+  MISSED = "missed",
 }
 
 interface Configurations {
@@ -203,6 +211,15 @@ export const getAsteroidRandomRockType = (): number => {
   return rockType;
 };
 
+export const isImpactRoute = (path: AsteroidsModel.Path): boolean => {
+  const bottomValue = parseInt(path.to.bottom, 10);
+  const topValue = parseInt(path.to.top, 10);
+
+  const value = isNaN(bottomValue) ? topValue : bottomValue;
+
+  return value > 84 || value < 5 ? false : true;
+};
+
 export const getAsteroids = (
   configurations: Configurations,
   asteroidsTimeGapPerLevel: AsteroidsModel.AsteroidsNumberPerLevel,
@@ -228,11 +245,12 @@ export const getAsteroids = (
         asteroidsTimeGapPerLevel,
         asteroidsWindowTimePerLevel
       );
-
-      baseTime = newBaseTime;
+      baseTime = newBaseTime; // so next random delay start after the last asteroid time window
 
       const rotationSpeed = getAsteroidRandomRotationSpeed();
       const rockType = getAsteroidRandomRockType();
+
+      const impactRoute = isImpactRoute(path);
 
       const asteroid: AsteroidsModel.Asteroid = {
         id: `${level}-${asteroidIndex}`,
@@ -241,9 +259,12 @@ export const getAsteroids = (
         rotationSpeed,
         pathSpeed,
         rockType,
+        state: AsteroidState.IDLE,
+        impactRoute,
       };
       asteroids.push(asteroid);
     }
   }
+
   return asteroids;
 };
