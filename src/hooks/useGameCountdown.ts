@@ -5,11 +5,18 @@ export const useGameCountdown = (
   gameStarted: boolean
 ) => {
   const [gameIsOver, setGameIsOver] = useState(false);
-  const [timer, setTimer] = useState(timeMiliseconds);
+  const timerRef = useRef(timeMiliseconds);
+
   let intervalRef = useRef<any>();
 
   const decreaseTimer = (miliseconds: number = 1000) => {
-    setTimer((prev) => prev - miliseconds);
+    timerRef.current = timerRef.current - miliseconds;
+    console.log("Countdown: ", timerRef.current);
+
+    if (timerRef.current <= 0) {
+      clearInterval(intervalRef.current);
+      setGameIsOver(true);
+    }
   };
 
   useEffect(() => {
@@ -24,13 +31,5 @@ export const useGameCountdown = (
     }
   }, [gameStarted]);
 
-  useEffect(() => {
-    console.log("Countdown: ", timer);
-    if (timer <= 0) {
-      clearInterval(intervalRef.current);
-      setGameIsOver(true);
-    }
-  }, [timer]);
-
-  return { timer, intervalRef, gameIsOver };
+  return { timer: timerRef.current, intervalRef, gameIsOver };
 };
