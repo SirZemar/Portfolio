@@ -1,38 +1,49 @@
-import React from "react";
-import { AnimatePresence, motion, transform } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import {motion } from "framer-motion";
 import { PlanetMotion } from "./Planet.motion.styles";
 import { planetImage } from "../../../images";
 
-const variants = {
-  isIntro: { left: "200px", opacity: 1, transition: { duration: 2 } },
-  isGame: {
-    left: "-250px",
+const planetImageVariants = {
+  initial: { opacity: 0, translateX: 80 },
+  isIntro: {
     opacity: 1,
+    translateX: 100,
+    transition: { opacity: { duration: 1 }, duration: 2 },
+  },
+  isGame: {
+    opacity: 1,
+    translateX: [100, 120, -350],
+    rotate: "360deg",
     transition: {
-      duration: 2,
-      transform: {
-        translate: "rotate(360deg)",
-        transition: { repeat: Infinity, duration: 10 },
+      rotate: { duration: 40, repeat: Infinity, ease: "linear" },
+      translateX: {
+        duration: 2,
+        time: [0, 0.5, 1],
+        delay: 0.5,
+        type: "spring",
       },
     },
   },
 };
-export const Planet: React.FC<any> = ({ gameStarted }) => (
-  <PlanetMotion as={motion.div}>
-    <motion.img
-      className="planet-image"
-      src={planetImage}
-      initial={{ opacity: 0, translateX: 80 }}
-      animate={{
-        rotate: gameStarted ? "360deg" : "0deg",
-        opacity: 1,
-        translateX: gameStarted ? -350 : 100,
-        transition: {
-          duration: 2,
-          translateX: { duration: 3 },
-          rotate: { duration: 40, repeat: Infinity, ease: "linear" },
-        },
-      }}
-    ></motion.img>
-  </PlanetMotion>
-);
+
+export const Planet: React.FC<any> = ({ gameStarted }) => {
+  const [gameState, setGameState] = useState("isIntro");
+
+  useEffect(() => {
+    if (gameStarted) {
+      setGameState("isGame");
+    }
+  }, [gameStarted]);
+
+  return (
+    <PlanetMotion as={motion.div}>
+      <motion.img
+        className="planet-image"
+        src={planetImage}
+        variants={planetImageVariants}
+        initial={"initial"}
+        animate={gameState}
+      ></motion.img>
+    </PlanetMotion>
+  );
+};
