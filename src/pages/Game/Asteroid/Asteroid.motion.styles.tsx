@@ -7,12 +7,12 @@ interface Rotate {
 }
 
 export const AsteroidMotion = styled(motion.div)<Rotate>`
+  display: grid;
   position: absolute;
   width: 75px;
   height: 75px;
   transform: scale(0.8);
   height: 75px;
-  display: block;
 
   animation: "rotateAnimationType${({ rocktype: rockType }) => rockType}"
     ${({ rotationspeed: rotationSpeed }) => rotationSpeed + "s"} steps(22)
@@ -101,4 +101,10 @@ export const AsteroidMotion = styled(motion.div)<Rotate>`
       background-position: calc(75px * 23) calc(-75px * 8);
     }
   }
+`;
+
+export const AsteroidHitbox = styled.div`
+  place-self: center;
+  width: 75%;
+  height: 75%;
 `;

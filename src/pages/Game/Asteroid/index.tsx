@@ -4,7 +4,7 @@ import { AsteroidsModel } from "@models";
 
 import { asteroidType } from "../../../images";
 
-import { AsteroidMotion } from "./Asteroid.motion.styles";
+import { AsteroidHitbox, AsteroidMotion } from "./Asteroid.motion.styles";
 import { AsteroidState } from "../AsteroidCluster/AsteroidCluster.helpers";
 interface Props {
   asteroid: AsteroidsModel.Asteroid;
@@ -54,6 +54,11 @@ const Asteroid: React.FC<Props> = ({ asteroid, gamePlaying }) => (
         asteroid.state = AsteroidState.MISSED;
       }
     }}
-  ></AsteroidMotion>
+  >
+    <AsteroidHitbox
+      as={motion.div}
+      whileHover={{ cursor: "pointer" }}
+    ></AsteroidHitbox>
+  </AsteroidMotion>
 );
 export default Asteroid;
