@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { GlobalStyle } from './GlobalStyles';
-import { FontStyles } from './FontStyles';
-import { Container } from './App.styles';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { GlobalStyle } from "./GlobalStyles";
+import { FontStyles } from "./FontStyles";
+import { Container } from "./App.styles";
 // API
 import { useReposFetch } from "./hooks/useReposFetch";
 // Components
