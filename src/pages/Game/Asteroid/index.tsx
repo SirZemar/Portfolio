@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { AsteroidsModel } from "@models";
 
@@ -37,29 +37,48 @@ const asteroidVariants = {
   }),
 };
 
-const Asteroid: React.FC<Props> = ({ asteroid, gamePlaying }) => (
-  <AsteroidMotion
-    rocktype={asteroid.rockType}
-    rotationspeed={asteroid.rotationSpeed}
-    as={motion.div}
-    initial={"initial"}
-    variants={asteroidVariants}
-    custom={asteroid}
-    animate={gamePlaying ? "moveAsteroid" : ""}
-    key={asteroid.id}
-    onAnimationComplete={() => {
-      if (asteroid.impactRoute) {
-        asteroid.state = AsteroidState.IMPACT;
-      } else {
-        asteroid.state = AsteroidState.MISSED;
-      }
-    }}
-  >
-    <AsteroidHitbox
-      as={motion.div}
-      onClick={() => console.log("Asteroid clicked")}
-      whileHover={{ cursor: `url('${targetLock}') 25 25, auto` }}
-    ></AsteroidHitbox>
-  </AsteroidMotion>
-);
+const Asteroid: React.FC<Props> = ({ asteroid, gamePlaying }) => {
+  const [isDestroyed, setIsDestroyed] = useState(false);
+
+  const onHitboxClick = () => {
+    setIsDestroyed(true);
+    console.log(asteroid);
+  };
+
+  useEffect(() => {
+    if (isDestroyed) {
+      asteroid.state = AsteroidState.DESTROYED;
+    }
+  }, [isDestroyed]);
+
+  return (
+    <>
+      {isDestroyed === false && (
+        <AsteroidMotion
+          rocktype={asteroid.rockType}
+          rotationspeed={asteroid.rotationSpeed}
+          as={motion.div}
+          initial={"initial"}
+          variants={asteroidVariants}
+          custom={asteroid}
+          animate={gamePlaying ? "moveAsteroid" : ""}
+          key={asteroid.id}
+          onAnimationComplete={() => {
+            if (asteroid.impactRoute) {
+              asteroid.state = AsteroidState.IMPACT;
+            } else {
+              asteroid.state = AsteroidState.MISSED;
+            }
+          }}
+        >
+          <AsteroidHitbox
+            as={motion.div}
+            onClick={() => onHitboxClick()}
+            whileHover={{ cursor: `url('${targetLock}') 25 25, auto` }}
+          ></AsteroidHitbox>
+        </AsteroidMotion>
+      )}
+    </>
+  );
+};
 export default Asteroid;
