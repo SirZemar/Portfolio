@@ -3,6 +3,10 @@ import { Container } from "./Game.styles";
 
 // Components
 import Ripple from "./Ripple";
+import { Planet } from "./Planet";
+import { Button, ButtonType } from "src/common/Button";
+import AsteroidCluster from "./AsteroidCluster";
+
 // Unique Id
 import { v4 as uuid } from "uuid";
 // Paths
@@ -11,13 +15,11 @@ import paths from "../../paths";
 import { shuffle } from "../../utils";
 // Styles
 import { Wrapper } from "../../common/Wrapper";
-
+// Images
+import { aiming } from "../../images";
 import Stars from "./Stars";
-import AsteroidCluster from "./AsteroidCluster";
 
 import { useGameCountdown } from "../../hooks/useGameCountdown";
-import { Planet } from "./Planet";
-import { Button, ButtonType } from "src/common/Button";
 
 export interface Coordenates {
   x: number;
@@ -33,7 +35,6 @@ const Game: React.FC = () => {
     gameFullTime,
     gameStarted
   );
-
   console.log("Game rendered!");
 
   useEffect(() => {
@@ -75,7 +76,7 @@ const Game: React.FC = () => {
         setCoordenatesArray={setMoussePositionArray}
         paths={pathArray}
       />
-      <Wrapper>
+      <Wrapper style={{ cursor: `url(${aiming}) 25 25, auto` }}>
         <Stars />
         <AsteroidCluster
           timer={timer}

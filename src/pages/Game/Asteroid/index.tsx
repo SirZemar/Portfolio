@@ -2,10 +2,11 @@ import React from "react";
 import { motion } from "framer-motion";
 import { AsteroidsModel } from "@models";
 
-import { asteroidType } from "../../../images";
+import { asteroidType, targetLock } from "../../../images";
 
 import { AsteroidHitbox, AsteroidMotion } from "./Asteroid.motion.styles";
 import { AsteroidState } from "../AsteroidCluster/AsteroidCluster.helpers";
+
 interface Props {
   asteroid: AsteroidsModel.Asteroid;
   gamePlaying: boolean;
@@ -44,7 +45,6 @@ const Asteroid: React.FC<Props> = ({ asteroid, gamePlaying }) => (
     initial={"initial"}
     variants={asteroidVariants}
     custom={asteroid}
-    onClick={() => console.log("Asteroid clicked")}
     animate={gamePlaying ? "moveAsteroid" : ""}
     key={asteroid.id}
     onAnimationComplete={() => {
@@ -57,7 +57,8 @@ const Asteroid: React.FC<Props> = ({ asteroid, gamePlaying }) => (
   >
     <AsteroidHitbox
       as={motion.div}
-      whileHover={{ cursor: "pointer" }}
+      onClick={() => console.log("Asteroid clicked")}
+      whileHover={{ cursor: `url('${targetLock}') 25 25, auto` }}
     ></AsteroidHitbox>
   </AsteroidMotion>
 );
