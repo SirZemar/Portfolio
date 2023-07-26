@@ -25,10 +25,9 @@ interface Configurations {
   totalLevels: number;
 }
 
-export const getAsteroidRandomPath = (): AsteroidsModel.Path => {
+export const getAsteroidRandomPath = (side: string): AsteroidsModel.Path => {
   const from: AsteroidsModel.PathFrom = { left: "", top: "", bottom: "" };
   const to: AsteroidsModel.PathTo = { left: "", top: "", bottom: "" };
-  const side = getAsteroidRandomOriginSide();
 
   let path = {} as AsteroidsModel.Path;
 
@@ -220,6 +219,74 @@ export const isImpactRoute = (path: AsteroidsModel.Path): boolean => {
   return value > 84 || value < 5 ? false : true;
 };
 
+export const getAsteroidExitInfo = (
+  path: AsteroidsModel.Path,
+  side: string,
+  pathSpeed: number
+): AsteroidsModel.AsteroidExit => {
+  let verticalDiff = 0;
+  let horizontalDiff = 100;
+  let top = "";
+  let bottom = "";
+  switch (side) {
+    case AsteroidOriginSide.TOP:
+      verticalDiff =
+        parseInt(path.to.bottom, 10) - parseInt(path.from.bottom, 10);
+      top = "Auto";
+      bottom = verticalDiff / 10 + parseInt(path.to.bottom, 10) + "%";
+      break;
+    case AsteroidOriginSide.BOTTOM:
+      verticalDiff = parseInt(path.to.top, 10) - parseInt(path.from.top, 10);
+      bottom = "Auto";
+      top = verticalDiff / 10 + parseInt(path.to.top, 10) + "%";
+      break;
+    case AsteroidOriginSide.RIGHT:
+      if (path.to.bottom === "Auto") {
+        verticalDiff = parseInt(path.to.top, 10) - parseInt(path.from.top, 10);
+        bottom = "Auto";
+        horizontalDiff =
+          parseInt(path.to.left, 10) - parseInt(path.from.left, 10);
+        top =
+          verticalDiff / (parseInt(path.from.left, 10) / 10) +
+          parseInt(path.to.top, 10) +
+          "%";
+      } else {
+        verticalDiff =
+          parseInt(path.to.bottom, 10) - parseInt(path.from.bottom, 10);
+        top = "Auto";
+        horizontalDiff =
+          parseInt(path.to.left, 10) - parseInt(path.from.left, 10);
+        bottom =
+          verticalDiff / (parseInt(path.from.left, 10) / 10) +
+          parseInt(path.to.bottom, 10) +
+          "%";
+      }
+      break;
+  }
+
+  const exitPath = {
+    from: path.to,
+    to: {
+      left: "-10%",
+      top,
+      bottom,
+    },
+  };
+
+  const diagonalLenght = Math.sqrt(
+    Math.pow(horizontalDiff, 2) + Math.pow(verticalDiff, 2)
+  );
+  const exitDiagonalLenght = Math.sqrt(
+    100 + Math.pow(verticalDiff / (parseInt(path.from.left, 10) / 10), 2)
+  );
+  const speed = (pathSpeed * exitDiagonalLenght) / diagonalLenght;
+
+  const exitAsteroid = { path: exitPath, speed };
+  return exitAsteroid;
+};
+
+export const getExitPathAndSpeed = () => {};
+
 export const getAsteroids = (
   configurations: Configurations,
   asteroidsTimeGapPerLevel: AsteroidsModel.AsteroidsNumberPerLevel,
@@ -235,7 +302,8 @@ export const getAsteroids = (
       asteroidIndex < asteroidsNumberPerLevel[level];
       asteroidIndex++
     ) {
-      const path = getAsteroidRandomPath();
+      const pathOriginSide = getAsteroidRandomOriginSide();
+      const path = getAsteroidRandomPath(pathOriginSide);
       const pathSpeed = getAsteroidRandomPathSpeed();
 
       const { delay, newBaseTime } = getAsteroidRandomDelay(
@@ -251,6 +319,7 @@ export const getAsteroids = (
       const rockType = getAsteroidRandomRockType();
 
       const impactRoute = isImpactRoute(path);
+      const exitAsteroid = getAsteroidExitInfo(path, pathOriginSide, pathSpeed);
 
       const asteroid: AsteroidsModel.Asteroid = {
         id: `${level}-${asteroidIndex}`,
@@ -261,6 +330,7 @@ export const getAsteroids = (
         rockType,
         state: AsteroidState.IDLE,
         impactRoute,
+        exitAsteroid,
       };
       asteroids.push(asteroid);
     }

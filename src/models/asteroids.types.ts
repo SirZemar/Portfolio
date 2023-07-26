@@ -7,6 +7,7 @@ export interface Asteroid {
   rockType: number;
   state: string;
   impactRoute: boolean;
+  exitAsteroid: AsteroidExit;
 }
 
 export interface Path {
@@ -21,7 +22,6 @@ export interface Path {
     bottom: string;
   };
 }
-
 export interface ValuePerIndex {
   [key: number]: number;
 }
@@ -29,6 +29,7 @@ export interface ValuePerIndex {
 export type AsteroidsNumberPerLevel = ValuePerIndex;
 export type AsteroidsTimeGapPerLevel = ValuePerIndex;
 export type AsteroidsWindowTimePerLevel = ValuePerIndex;
+export type AsteroidExit = { path: Path; speed: number };
 export type AsteroidDelay = { delay: Asteroid["delay"]; newBaseTime: number };
 
 export type PathFrom = Path["from"];

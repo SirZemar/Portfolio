@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, animate, motion, motionValue } from "framer-motion";
 import { AsteroidsModel } from "@models";
 
 import { asteroidType, targetLock } from "../../../images";
@@ -35,25 +35,44 @@ const asteroidVariants = {
       },
     },
   }),
+  exitMiss: (asteroid: AsteroidsModel.Asteroid) => ({
+    left: asteroid.exitAsteroid.path.to.left,
+    bottom: asteroid.exitAsteroid.path.to.bottom,
+    top: asteroid.exitAsteroid.path.to.top,
+    opacity: 0,
+    transition: { duration: asteroid.exitAsteroid.speed, ease: "linear" },
+  }),
+  exitImpact: () => ({}),
+  exitDestroyed: () => ({}),
 };
 
 const Asteroid: React.FC<Props> = ({ asteroid, gamePlaying }) => {
-  const [isDestroyed, setIsDestroyed] = useState(false);
+  const [isActive, setIsActive] = useState(true);
 
-  const onHitboxClick = () => {
-    setIsDestroyed(true);
+  const onAsteroidImpact = () => {
+    asteroid.state = AsteroidState.IMPACT;
+    setIsActive(false);
+  };
+
+  const onAsteroidMiss = () => {
+    asteroid.state = AsteroidState.MISSED;
+    setIsActive(false);
+  };
+
+  const onAsteroidHitboxClick = () => {
+    asteroid.state = AsteroidState.DESTROYED;
+    setIsActive(false);
     console.log(asteroid);
   };
 
   useEffect(() => {
-    if (isDestroyed) {
-      asteroid.state = AsteroidState.DESTROYED;
+    if (!isActive) {
     }
-  }, [isDestroyed]);
+  }, [isActive]);
 
   return (
-    <>
-      {isDestroyed === false && (
+    <AnimatePresence>
+      {isActive && (
         <AsteroidMotion
           rocktype={asteroid.rockType}
           rotationspeed={asteroid.rotationSpeed}
@@ -65,20 +84,21 @@ const Asteroid: React.FC<Props> = ({ asteroid, gamePlaying }) => {
           key={asteroid.id}
           onAnimationComplete={() => {
             if (asteroid.impactRoute) {
-              asteroid.state = AsteroidState.IMPACT;
+              onAsteroidImpact();
             } else {
-              asteroid.state = AsteroidState.MISSED;
+              onAsteroidMiss();
             }
           }}
+          exit={asteroid.impactRoute ? "exitImpact" : "exitMiss"}
         >
           <AsteroidHitbox
             as={motion.div}
-            onClick={() => onHitboxClick()}
+            onClick={() => onAsteroidHitboxClick()}
             whileHover={{ cursor: `url('${targetLock}') 25 25, auto` }}
           ></AsteroidHitbox>
         </AsteroidMotion>
       )}
-    </>
+    </AnimatePresence>
   );
 };
 export default Asteroid;
