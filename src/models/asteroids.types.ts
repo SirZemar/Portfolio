@@ -8,6 +8,7 @@ export interface Asteroid {
   state: string;
   impactRoute: boolean;
   exitAsteroid: AsteroidExit;
+  interceptLocation?: any;
 }
 
 export interface Path {
