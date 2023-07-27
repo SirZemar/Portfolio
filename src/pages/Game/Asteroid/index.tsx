@@ -26,9 +26,11 @@ const Asteroid: React.FC<Props> = ({ asteroid, gamePlaying }) => {
       controls.start("exitDestroy").then(() => setIsActive(false));
     } else if (asteroid.impactRoute) {
       console.log("exitImpact", asteroid.id);
+      asteroid.state = AsteroidState.IMPACT;
       controls.start("exitImpact").then(() => setIsActive(false));
     } else {
       console.log("exitMiss", asteroid.id);
+      asteroid.state = AsteroidState.MISSED;
       controls.start("exitMiss").then(() => setIsActive(false));
     }
   };
