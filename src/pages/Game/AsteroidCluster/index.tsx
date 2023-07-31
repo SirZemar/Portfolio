@@ -1,68 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Container } from "./AsteroidCluster.styles";
-// Models
-import { AsteroidsModel } from "@models";
-// Helpers
-import {
-  getAsteroidsNumberPerLevel,
-  getAsteroidsTimeGapPerLevel,
-  getAsteroidsWindowTimePerLevel,
-  getAsteroids,
-} from "./AsteroidCluster.helpers";
 import Asteroid from "../Asteroid";
+import { useGenerateAsteroids } from "src/hooks/useGenerateAsteroids";
 
 interface Props {
-  timer: number;
-  gameIsOver: boolean;
-  configurations: Configurations;
+  configurations: AsteroidConfigurations;
   gameStarted: boolean;
 }
 
-interface Configurations {
+export interface AsteroidConfigurations {
   fullTime: number;
   totalLevels: number;
 }
 
-const AsteroidCluster: React.FC<Props> = ({
-  timer,
-  gameIsOver,
-  configurations,
-  gameStarted,
-}) => {
-  const [asteroids, setAsteroids] = useState<AsteroidsModel.Asteroid[]>([]);
-
-  useEffect(() => {
-    const asteroidsNumberPerLevel = getAsteroidsNumberPerLevel(
-      configurations.totalLevels
-    );
-    const asteroidsTimeGapPerLevel = getAsteroidsTimeGapPerLevel(
-      configurations,
-      asteroidsNumberPerLevel
-    );
-    const asteroidsWindowTimePerLevel = getAsteroidsWindowTimePerLevel(
-      configurations,
-      asteroidsNumberPerLevel
-    );
-
-    const asteroids = getAsteroids(
-      configurations,
-      asteroidsTimeGapPerLevel,
-      asteroidsWindowTimePerLevel,
-      asteroidsNumberPerLevel
-    );
-
-    setAsteroids(asteroids);
-  }, []);
+const AsteroidCluster: React.FC<Props> = ({ configurations, gameStarted }) => {
+  const asteroidsPerLevels = useGenerateAsteroids(configurations);
 
   return (
     <Container>
-      {asteroids.map((asteroid) => (
-        <Asteroid
-          key={asteroid.id}
-          asteroid={asteroid}
-          gamePlaying={gameStarted}
-        ></Asteroid>
-      ))}
+      {asteroidsPerLevels &&
+        Object.values(asteroidsPerLevels)
+          .flat()
+          .map((asteroids) => asteroids)
+          .map((asteroid) => {
+            return gameStarted ? (
+              <Asteroid
+                key={asteroid.id}
+                asteroid={asteroid}
+                gamePlaying={gameStarted}
+              ></Asteroid>
+            ) : null;
+          })}
     </Container>
   );
 };

@@ -5,13 +5,19 @@ import { AsteroidsModel } from "@models";
 import { asteroidType, targetLock } from "../../../images";
 
 import { AsteroidHitbox, AsteroidMotion } from "./Asteroid.motion.styles";
-import { AsteroidState } from "../AsteroidCluster/AsteroidCluster.helpers";
 import { AnimationDefinition } from "framer-motion/types/render/utils/animation";
 import RenderCount from "src/common/RenderCount";
 
 interface Props {
   asteroid: AsteroidsModel.Asteroid;
   gamePlaying: boolean;
+}
+
+export enum AsteroidState {
+  IDLE = "idle",
+  IMPACT = "impact",
+  MISSED = "missed",
+  DESTROYED = "destroyed",
 }
 
 enum AsteroidAnimations {

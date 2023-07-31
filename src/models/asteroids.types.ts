@@ -11,6 +11,10 @@ export interface Asteroid {
   interceptLocation?: any;
 }
 
+export interface AsteroidsPerLevels {
+  [key: string]: Asteroid[];
+}
+
 export interface Path {
   from: {
     left: string;

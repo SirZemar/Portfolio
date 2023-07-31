@@ -1,10 +1,16 @@
 import { AsteroidsModel } from "@models";
-
+import { useState, useEffect, useRef, useMemo } from "react";
 import {
   getRandomIntFromInterval,
-  successByProbability,
   roundToDecimal,
+  successByProbability,
 } from "src/utils";
+import { AsteroidConfigurations } from "src/pages/Game/AsteroidCluster";
+
+interface Configurations {
+  fullTime: number;
+  totalLevels: number;
+}
 
 enum AsteroidOriginSide {
   TOP = "top",
@@ -20,12 +26,83 @@ export enum AsteroidState {
   MISSED = "missed",
 }
 
-interface Configurations {
-  fullTime: number;
-  totalLevels: number;
-}
+export const useGenerateAsteroids = (
+  configurationsData: AsteroidConfigurations
+): AsteroidsModel.AsteroidsPerLevels => {
+  const [asteroids, setAsteroids] = useState({});
+  const [configurations] = useState(configurationsData);
 
-export const getAsteroidRandomPath = (side: string): AsteroidsModel.Path => {
+  const asteroidNumberPerLevel = useMemo(
+    () => getAsteroidsNumberPerLevel(configurations.totalLevels),
+    [configurations.totalLevels]
+  );
+  const asteroidsTimeGapPerLevel = useMemo(
+    () => getAsteroidsTimeGapPerLevel(configurations, asteroidNumberPerLevel),
+    [configurations, asteroidNumberPerLevel]
+  );
+  const asteroidsWindowTimePerLevel = useMemo(
+    () =>
+      getAsteroidsWindowTimePerLevel(configurations, asteroidNumberPerLevel),
+    [configurations, asteroidNumberPerLevel]
+  );
+
+  useEffect(() => {
+    let baseTime = 3000;
+
+    const asteroidsData = {} as any;
+    for (let level = 0; level < configurations.totalLevels; level++) {
+      const levelAsteroids = [];
+      for (
+        let asteroidIndex = 0;
+        asteroidIndex < asteroidNumberPerLevel[level];
+        asteroidIndex++
+      ) {
+        const pathOriginSide = getAsteroidRandomOriginSide();
+        const path = getAsteroidRandomPath(pathOriginSide);
+        const pathSpeed = getAsteroidRandomPathSpeed();
+
+        const { delay, newBaseTime } = getAsteroidRandomDelay(
+          level,
+          asteroidIndex,
+          baseTime,
+          asteroidsTimeGapPerLevel,
+          asteroidsWindowTimePerLevel
+        );
+        baseTime = newBaseTime; // so next random delay start after the last asteroid time window
+
+        const rotationSpeed = getAsteroidRandomRotationSpeed();
+        const rockType = getAsteroidRandomRockType();
+
+        const impactRoute = isImpactRoute(path);
+        const exitAsteroid = getAsteroidExitInfo(
+          path,
+          pathOriginSide,
+          pathSpeed
+        );
+
+        const asteroid: AsteroidsModel.Asteroid = {
+          id: `${level}-${asteroidIndex}`,
+          path,
+          delay,
+          rotationSpeed,
+          pathSpeed,
+          rockType,
+          state: AsteroidState.IDLE,
+          impactRoute,
+          exitAsteroid,
+        };
+        levelAsteroids.push(asteroid);
+      }
+      asteroidsData[`level-${level}`] = levelAsteroids;
+    }
+
+    setAsteroids(asteroidsData);
+  }, [configurations]);
+
+  return asteroids;
+};
+
+const getAsteroidRandomPath = (side: string): AsteroidsModel.Path => {
   const from: AsteroidsModel.PathFrom = { left: "", top: "", bottom: "" };
   const to: AsteroidsModel.PathTo = { left: "", top: "", bottom: "" };
 
@@ -88,7 +165,7 @@ export const getAsteroidRandomPath = (side: string): AsteroidsModel.Path => {
   return path;
 };
 
-export const getAsteroidRandomOriginSide = (): string => {
+const getAsteroidRandomOriginSide = (): string => {
   if (successByProbability(50)) {
     return AsteroidOriginSide.RIGHT;
   } else if (successByProbability(50)) {
@@ -98,65 +175,7 @@ export const getAsteroidRandomOriginSide = (): string => {
   }
 };
 
-export const getAsteroidsNumberPerLevel = (
-  totalLevels: number
-): AsteroidsModel.AsteroidsNumberPerLevel => {
-  const asteroidNumberIncrementByLevel = 2;
-
-  const asteroidsPerLevel: AsteroidsModel.AsteroidsNumberPerLevel = {};
-  const baseAsteroidsNumber = 2;
-
-  for (let i = 0; i < totalLevels; i++) {
-    asteroidsPerLevel[i] =
-      baseAsteroidsNumber + asteroidNumberIncrementByLevel * i;
-  }
-  return asteroidsPerLevel;
-};
-
-export const getAsteroidsTimeGapPerLevel = (
-  configurations: Configurations,
-  asteroidsPerLevel: AsteroidsModel.AsteroidsNumberPerLevel
-): AsteroidsModel.AsteroidsTimeGapPerLevel => {
-  const fullTime = configurations.fullTime;
-  const totalLevels = configurations.totalLevels;
-
-  const asteroidsTimeGapBufferPerLevel: any = {};
-  for (let i = 0; i < totalLevels; i++) {
-    const timePerLevel = fullTime / totalLevels;
-    const asteroidsTimeGapBufferTotal = timePerLevel * 0.1;
-
-    asteroidsTimeGapBufferPerLevel[i] = roundToDecimal(
-      asteroidsTimeGapBufferTotal / asteroidsPerLevel[i],
-      2
-    );
-  }
-  return asteroidsTimeGapBufferPerLevel;
-};
-
-export const getAsteroidsWindowTimePerLevel = (
-  configurations: Configurations,
-  asteroidsPerLevel: AsteroidsModel.AsteroidsNumberPerLevel
-): AsteroidsModel.AsteroidsWindowTimePerLevel => {
-  const fullTime = configurations.fullTime;
-  const totalLevels = configurations.totalLevels;
-
-  const asteroidsWindowTimePerLevel: any = {};
-  const asteroidsTimeGapPerLevel = getAsteroidsTimeGapPerLevel(
-    configurations,
-    asteroidsPerLevel
-  );
-
-  for (let level = 0; level < totalLevels; level++) {
-    const timePerLevel = fullTime / totalLevels;
-    asteroidsWindowTimePerLevel[level] = roundToDecimal(
-      timePerLevel / asteroidsPerLevel[level] - asteroidsTimeGapPerLevel[level],
-      2
-    );
-  }
-  return asteroidsWindowTimePerLevel;
-};
-
-export const getAsteroidRandomDelay = (
+const getAsteroidRandomDelay = (
   level: number,
   asteroidIndex: number,
   baseTime: number,
@@ -178,7 +197,7 @@ export const getAsteroidRandomDelay = (
   return { delay, newBaseTime };
 };
 
-export const getAsteroidRandomPathSpeed = (): number => {
+const getAsteroidRandomPathSpeed = (): number => {
   const randomNumber = getRandomIntFromInterval(1, 100);
   let randomSpeed = 0;
   if (randomNumber >= 1 && randomNumber <= 5) {
@@ -198,19 +217,19 @@ export const getAsteroidRandomPathSpeed = (): number => {
   return randomSpeed;
 };
 
-export const getAsteroidRandomRotationSpeed = (): number => {
+const getAsteroidRandomRotationSpeed = (): number => {
   const rotationSpeed = getRandomIntFromInterval(10, 30) / 10;
 
   return rotationSpeed;
 };
 
-export const getAsteroidRandomRockType = (): number => {
+const getAsteroidRandomRockType = (): number => {
   const rockType = getRandomIntFromInterval(0, 8);
 
   return rockType;
 };
 
-export const isImpactRoute = (path: AsteroidsModel.Path): boolean => {
+const isImpactRoute = (path: AsteroidsModel.Path): boolean => {
   const bottomValue = parseInt(path.to.bottom, 10);
   const topValue = parseInt(path.to.top, 10);
 
@@ -219,7 +238,7 @@ export const isImpactRoute = (path: AsteroidsModel.Path): boolean => {
   return value > 84 || value < 5 ? false : true;
 };
 
-export const getAsteroidExitInfo = (
+const getAsteroidExitInfo = (
   path: AsteroidsModel.Path,
   side: string,
   pathSpeed: number
@@ -285,56 +304,63 @@ export const getAsteroidExitInfo = (
   return exitAsteroid;
 };
 
-export const getExitPathAndSpeed = () => {};
+const getAsteroidsNumberPerLevel = (
+  totalLevels: number
+): AsteroidsModel.AsteroidsNumberPerLevel => {
+  const asteroidNumberIncrementByLevel = 2;
 
-export const getAsteroids = (
+  const asteroidsNumberPerLevel: AsteroidsModel.AsteroidsNumberPerLevel = {};
+  const baseAsteroidsNumber = 2;
+
+  for (let i = 0; i < totalLevels; i++) {
+    asteroidsNumberPerLevel[i] =
+      baseAsteroidsNumber + asteroidNumberIncrementByLevel * i;
+  }
+  return asteroidsNumberPerLevel;
+};
+
+const getAsteroidsTimeGapPerLevel = (
   configurations: Configurations,
-  asteroidsTimeGapPerLevel: AsteroidsModel.AsteroidsNumberPerLevel,
-  asteroidsWindowTimePerLevel: AsteroidsModel.AsteroidsNumberPerLevel,
-  asteroidsNumberPerLevel: AsteroidsModel.AsteroidsNumberPerLevel
-) => {
-  let baseTime = 3000;
-  const asteroids = [] as AsteroidsModel.Asteroid[];
+  asteroidsPerLevel: AsteroidsModel.AsteroidsNumberPerLevel
+): AsteroidsModel.AsteroidsTimeGapPerLevel => {
+  const fullTime = configurations.fullTime;
+  const totalLevels = configurations.totalLevels;
 
-  for (let level = 0; level < configurations.totalLevels; level++) {
-    for (
-      let asteroidIndex = 0;
-      asteroidIndex < asteroidsNumberPerLevel[level];
-      asteroidIndex++
-    ) {
-      const pathOriginSide = getAsteroidRandomOriginSide();
-      const path = getAsteroidRandomPath(pathOriginSide);
-      const pathSpeed = getAsteroidRandomPathSpeed();
+  const asteroidsTimeGapBufferPerLevel: any = {};
+  for (let i = 0; i < totalLevels; i++) {
+    const timePerLevel = fullTime / totalLevels;
+    const asteroidsTimeGapBufferTotal = timePerLevel * 0.1;
 
-      const { delay, newBaseTime } = getAsteroidRandomDelay(
-        level,
-        asteroidIndex,
-        baseTime,
-        asteroidsTimeGapPerLevel,
-        asteroidsWindowTimePerLevel
-      );
-      baseTime = newBaseTime; // so next random delay start after the last asteroid time window
+    asteroidsTimeGapBufferPerLevel[i] = roundToDecimal(
+      asteroidsTimeGapBufferTotal / asteroidsPerLevel[i],
+      2
+    );
+  }
+  return asteroidsTimeGapBufferPerLevel;
+};
 
-      const rotationSpeed = getAsteroidRandomRotationSpeed();
-      const rockType = getAsteroidRandomRockType();
+const getAsteroidsWindowTimePerLevel = (
+  configurations: Configurations,
+  asteroidsPerLevel: AsteroidsModel.AsteroidsNumberPerLevel
+): AsteroidsModel.AsteroidsWindowTimePerLevel => {
+  const fullTime = configurations.fullTime;
+  const totalLevels = configurations.totalLevels;
 
-      const impactRoute = isImpactRoute(path);
-      const exitAsteroid = getAsteroidExitInfo(path, pathOriginSide, pathSpeed);
+  const asteroidsWindowTimePerLevel: any = {};
+  const asteroidsTimeGapPerLevel = getAsteroidsTimeGapPerLevel(
+    configurations,
+    asteroidsPerLevel
+  );
 
-      const asteroid: AsteroidsModel.Asteroid = {
-        id: `${level}-${asteroidIndex}`,
-        path,
-        delay,
-        rotationSpeed,
-        pathSpeed,
-        rockType,
-        state: AsteroidState.IDLE,
-        impactRoute,
-        exitAsteroid,
-      };
-      asteroids.push(asteroid);
-    }
+  for (let level = 0; level < totalLevels; level++) {
+    const timePerLevel = fullTime / totalLevels;
+    asteroidsWindowTimePerLevel[level] = roundToDecimal(
+      timePerLevel / asteroidsPerLevel[level] - asteroidsTimeGapPerLevel[level],
+      2
+    );
   }
 
-  return asteroids;
+  console.log("RECALCULATIONS");
+
+  return asteroidsWindowTimePerLevel;
 };
