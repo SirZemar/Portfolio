@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { AsteroidsModel } from "@models";
 
@@ -6,6 +6,7 @@ import { asteroidType, targetLock } from "../../../images";
 
 import { AsteroidHitbox, AsteroidMotion } from "./Asteroid.motion.styles";
 import { AsteroidState } from "../AsteroidCluster/AsteroidCluster.helpers";
+import { AnimationDefinition } from "framer-motion/types/render/utils/animation";
 import RenderCount from "src/common/RenderCount";
 
 interface Props {
@@ -13,96 +14,65 @@ interface Props {
   gamePlaying: boolean;
 }
 
-const Asteroid: React.FC<Props> = ({ asteroid, gamePlaying }) => {
+enum AsteroidAnimations {
+  INITIAL = "initial",
+  MOVE = "move",
+  IMPACT = "impact",
+  DESTROY = "destroy",
+  MISS = "miss",
+}
+
+const Asteroid: React.FC<Props> = ({ asteroid }) => {
   const [isActive, setIsActive] = useState(true);
   const [interceptLocation, setInterceptLocation] = useState(false as any);
-  const [destroy, setDestroy] = useState(false);
+  const asteroidRef = useRef<HTMLDivElement>(null);
 
   const controls = useAnimation();
 
-  const onAnimationComplete = () => {
-    if (destroy) {
-      console.log("exitDestroy", asteroid.id);
-      controls.start("exitDestroy").then(() => setIsActive(false));
-    } else if (asteroid.impactRoute) {
-      console.log("exitImpact", asteroid.id);
+  if (isActive && asteroid.state === AsteroidState.IDLE) {
+    controls.start(AsteroidAnimations.MOVE);
+  }
+
+  const onAnimationComplete = (definition: AnimationDefinition) => {
+    if (asteroid.impactRoute) {
+      console.log(definition, asteroid.id);
       asteroid.state = AsteroidState.IMPACT;
-      controls.start("exitImpact").then(() => setIsActive(false));
+      controls.start(AsteroidAnimations.IMPACT).then(() => setIsActive(false));
     } else {
-      console.log("exitMiss", asteroid.id);
+      console.log(definition, asteroid.id);
       asteroid.state = AsteroidState.MISSED;
-      controls.start("exitMiss").then(() => setIsActive(false));
+      controls.start(AsteroidAnimations.MISS).then(() => setIsActive(false));
     }
   };
 
-  const asteroidVariants = {
-    initial: (asteroid: AsteroidsModel.Asteroid) => ({
-      backgroundImage: `url(${asteroidType})`,
-      backgroundPosition: `calc(75px * 0) calc(-75px * ${asteroid.rockType})`,
-      left: asteroid.path.from.left,
-      top: asteroid.path.from.top,
-      bottom: asteroid.path.from.bottom,
-      opacity: 0,
-    }),
-    moveAsteroid: (asteroid: AsteroidsModel.Asteroid) => ({
-      left: asteroid.path.to.left,
-      top: asteroid.path.to.top,
-      bottom: asteroid.path.to.bottom,
-      opacity: 1,
-      transition: {
-        duration: asteroid.pathSpeed,
-        ease: "linear",
-        delay: asteroid.delay,
-        opacity: {
-          duration: 0,
-        },
-      },
-    }),
-    exitMiss: (asteroid: AsteroidsModel.Asteroid) => ({
-      left: asteroid.exitAsteroid.path.to.left,
-      bottom: asteroid.exitAsteroid.path.to.bottom,
-      top: asteroid.exitAsteroid.path.to.top,
-      opacity: 0.5,
-      transition: { duration: asteroid.exitAsteroid.speed, ease: "linear" },
-    }),
-    exitImpact: () => ({
-      opacity: 0,
-      transition: { duration: 0 },
-    }),
-    exitDestroy: () => ({
-      opacity: 0,
-      transition: { duration: 0 },
-    }),
-  };
+  const onAsteroidHitboxClick = (e: React.MouseEvent<HTMLElement>) => {
+    console.log(asteroidRef.current?.style);
 
-  const onAsteroidHitboxClick = (e: any) => {
-    setDestroy(true);
-    asteroid.state = AsteroidState.DESTROYED;
+    const asteroidElement = asteroidRef.current;
+    if (asteroidElement) {
+      asteroid.state = AsteroidState.DESTROYED;
+      controls.stop();
+      controls.start(AsteroidAnimations.DESTROY).then(() => setIsActive(false));
 
-    const elStyles = e.currentTarget.parentNode.style;
+      const left = asteroidElement.style.left;
+      const bottom = asteroidElement.style.bottom;
+      const top = asteroidElement.style.top;
 
-    elStyles.display = "none";
-    const left = elStyles.left;
-    const bottom = elStyles.bottom;
-    const top = elStyles.top;
+      setInterceptLocation({
+        left,
+        bottom,
+        top,
+      });
 
-    setInterceptLocation({
-      left,
-      bottom,
-      top,
-    });
-  };
-
-  useEffect(() => {
-    if (gamePlaying) {
-      controls.start("moveAsteroid");
+      // TODO animation image console.log(interceptLocation);
     }
-  }, [gamePlaying]);
+  };
 
   return (
     <>
       {isActive && (
         <AsteroidMotion
+          ref={asteroidRef}
           rocktype={asteroid.rockType}
           rotationspeed={asteroid.rotationSpeed}
           as={motion.div}
@@ -111,8 +81,8 @@ const Asteroid: React.FC<Props> = ({ asteroid, gamePlaying }) => {
           custom={asteroid}
           animate={controls}
           key={asteroid.id}
-          onAnimationComplete={(definition: any) => {
-            onAnimationComplete();
+          onAnimationComplete={(definition: AnimationDefinition) => {
+            onAnimationComplete(definition);
           }}
         >
           <AsteroidHitbox
@@ -127,6 +97,45 @@ const Asteroid: React.FC<Props> = ({ asteroid, gamePlaying }) => {
 };
 export default React.memo(Asteroid);
 
+const asteroidVariants = {
+  [AsteroidAnimations.INITIAL]: (asteroid: AsteroidsModel.Asteroid) => ({
+    backgroundImage: `url(${asteroidType})`,
+    backgroundPosition: `calc(75px * 0) calc(-75px * ${asteroid.rockType})`,
+    left: asteroid.path.from.left,
+    top: asteroid.path.from.top,
+    bottom: asteroid.path.from.bottom,
+    opacity: 0,
+  }),
+  [AsteroidAnimations.MOVE]: (asteroid: AsteroidsModel.Asteroid) => ({
+    left: asteroid.path.to.left,
+    top: asteroid.path.to.top,
+    bottom: asteroid.path.to.bottom,
+    opacity: 1,
+    transition: {
+      duration: asteroid.pathSpeed,
+      ease: "linear",
+      delay: asteroid.delay,
+      opacity: {
+        duration: 0,
+      },
+    },
+  }),
+  [AsteroidAnimations.MISS]: (asteroid: AsteroidsModel.Asteroid) => ({
+    left: asteroid.exitAsteroid.path.to.left,
+    bottom: asteroid.exitAsteroid.path.to.bottom,
+    top: asteroid.exitAsteroid.path.to.top,
+    opacity: 0.5,
+    transition: { duration: asteroid.exitAsteroid.speed, ease: "linear" },
+  }),
+  [AsteroidAnimations.IMPACT]: () => ({
+    opacity: 0,
+    transition: { duration: 0 },
+  }),
+  [AsteroidAnimations.DESTROY]: () => ({
+    opacity: 0,
+    transition: { duration: 0 },
+  }),
+};
 {
   /* {!isActive && asteroid.state === AsteroidState.IMPACT && (
 <div
