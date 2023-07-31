@@ -79,8 +79,6 @@ const Game: React.FC = () => {
       <Wrapper style={{ cursor: `url(${aiming}) 25 25, auto` }}>
         <Stars />
         <AsteroidCluster
-          timer={timer}
-          gameIsOver={gameIsOver}
           configurations={{
             fullTime: gameFullTime,
             totalLevels: gameTotalLevels,
