@@ -105,6 +105,6 @@ export const AsteroidMotion = styled(motion.div)<Rotate>`
 
 export const AsteroidHitbox = styled.div`
   place-self: center;
-  width: 75%;
-  height: 75%;
+  width: 95%;
+  height: 95%;
 `;
