@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Container } from "./AsteroidCluster.styles";
 import Asteroid from "../Asteroid";
 import { useGenerateAsteroids } from "src/hooks/useGenerateAsteroids";
@@ -11,10 +11,17 @@ interface Props {
 export interface AsteroidConfigurations {
   fullTime: number;
   totalLevels: number;
+  planetSize: number;
 }
 
 const AsteroidCluster: React.FC<Props> = ({ configurations, gameStarted }) => {
-  const asteroidsPerLevels = useGenerateAsteroids(configurations);
+  const asteroidsPerLevels = useGenerateAsteroids(
+    configurations
+    // configurations.planetSize
+  );
+  console.log(asteroidsPerLevels);
+
+  // console.log("size: ", configurations.planetSize);
 
   return (
     <Container>

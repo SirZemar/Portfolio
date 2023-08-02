@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useLayoutEffect } from "react";
 import { Container } from "./Game.styles";
 
 // Components
@@ -20,6 +20,7 @@ import { aiming } from "../../images";
 import Stars from "./Stars";
 
 import { useGameCountdown } from "../../hooks/useGameCountdown";
+import Text from "src/common/Text";
 
 export interface Coordenates {
   x: number;
@@ -27,10 +28,11 @@ export interface Coordenates {
   id: string;
 }
 const Game: React.FC = () => {
+  // Configurations
   const gameFullTime = 30000;
   const gameTotalLevels = 5;
-  const [gameStarted, setGameStarted] = useState(false);
 
+  const [gameStarted, setGameStarted] = useState(false);
   const { timer, intervalRef, gameIsOver } = useGameCountdown(
     gameFullTime,
     gameStarted
@@ -51,6 +53,38 @@ const Game: React.FC = () => {
     []
   );
   const [pathArray, setPathArray] = useState<string[]>([]);
+
+  const planetRef = useRef<any>(null);
+  const [configurations, setConfigurations] = useState({
+    fullTime: gameFullTime,
+    totalLevels: gameTotalLevels,
+    planetSize: 0,
+  });
+
+  useLayoutEffect(() => {
+    planetRef.current = document.querySelector(".planet-image");
+
+    setConfigurations({
+      ...configurations,
+      planetSize: planetRef.current ? planetRef.current.clientHeight : 0,
+    });
+  }, []);
+
+  useEffect(() => {
+    if (gameStarted) return;
+    const handleWindowResize = () => {
+      setConfigurations({
+        ...configurations,
+        planetSize: planetRef.current ? planetRef.current.clientHeight : 0,
+      });
+    };
+
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
 
   // const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
   //   const offset = e.currentTarget.getBoundingClientRect().x;
@@ -76,21 +110,70 @@ const Game: React.FC = () => {
         setCoordenatesArray={setMoussePositionArray}
         paths={pathArray}
       />
-      <Wrapper style={{ cursor: `url(${aiming}) 25 25, auto` }}>
-        <Stars />
-        <AsteroidCluster
-          configurations={{
-            fullTime: gameFullTime,
-            totalLevels: gameTotalLevels,
+      <Stars />
+      <Wrapper
+        style={{
+          cursor: gameStarted ? `url(${aiming}) 25 25, auto` : "auto",
+          display: "flex",
+          alignItems: "center",
+          userSelect: "none",
+        }}
+      >
+        {/* TODO create component for visual help */}
+        {/* <div
+          style={{
+            position: "absolute",
+            display: "block",
+            background: "red",
+            height: "1px",
+            width: "100%",
+            left: "0",
+            bottom: "20%",
           }}
+        ></div>
+        <div
+          style={{
+            position: "absolute",
+            display: "block",
+            background: "red",
+            height: "1px",
+            width: "100%",
+            left: "0",
+            bottom: "80%",
+          }}
+        ></div> */}
+        <AsteroidCluster
+          configurations={configurations}
           gameStarted={gameStarted}
         />
-        <Planet gameStarted={gameStarted} />
-        {!gameStarted && (
-          <Button type={ButtonType.CALLBACK} fun={() => setGameStarted(true)}>
-            Start
-          </Button>
-        )}
+        <div className="inner-container">
+          <div className="inner-container__planet">
+            <Planet gameStarted={gameStarted} />
+          </div>
+          {!gameStarted && (
+            <div className="inner-container__intro">
+              <Text>
+                <h1>Planet danger!</h1>
+                <p>
+                  Iminence collision with an asteroid cluster guided by a
+                  vengeful pointer. Our defenses lie dormant, lasers thirsting
+                  for logic, but only a coding virtuoso can navigate this
+                  intricate pipeline of impending doom. We need you now! Channel
+                  your inner code maestro, steer those cannons with precision,
+                  and let's debug this celestial catastrophe pronto!
+                </p>
+              </Text>
+              <div className="inner-container__intro__start-button">
+                <Button
+                  type={ButtonType.CALLBACK}
+                  fun={() => setGameStarted(true)}
+                >
+                  Start
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
       </Wrapper>
     </Container>
   );

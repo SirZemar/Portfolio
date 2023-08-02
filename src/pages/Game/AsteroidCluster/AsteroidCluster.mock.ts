@@ -1,7 +1,7 @@
 import { AsteroidsModel } from "@models";
 import { AsteroidState } from "../Asteroid";
 
-const asteroidsMock: AsteroidsModel.Asteroid[] = [
+const asteroidsMock: any[] = [
   {
     id: "1",
     path: {

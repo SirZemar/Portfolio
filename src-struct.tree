@@ -1,0 +1,140 @@
+├── API.ts
+├── App.styles.ts
+├── App.tsx
+├── common
+│  ├── Button
+│  │  ├── Button.styles.ts
+│  │  └── index.tsx
+│  ├── Layout
+│  │  ├── index.tsx
+│  │  └── Layout.styles.ts
+│  ├── RenderCount
+│  │  ├── index.tsx
+│  │  └── RenderCount.styles.ts
+│  ├── Spinner
+│  │  ├── index.tsx
+│  │  └── Spinner.styles.ts
+│  ├── Text
+│  │  ├── index.tsx
+│  │  └── Text.styles.ts
+│  └── Wrapper
+│    └── index.ts
+├── folder.tree
+├── fonts
+│  └── DoFuturistic.ttf
+├── FontStyles.ts
+├── GlobalStyles.ts
+├── hooks
+│  ├── useGameCountdown.ts
+│  ├── useGenerateAsteroids.ts
+│  └── useReposFetch.ts
+├── images
+│  ├── asteroids
+│  │  ├── diffuse.png
+│  │  ├── diffuse2.png
+│  │  ├── diffuse3.png
+│  │  ├── filter2.png
+│  │  ├── filter3.png
+│  │  ├── filter4.png
+│  │  ├── filter5.png
+│  │  └── top_filter.png
+│  ├── crosshair
+│  │  ├── aiming-50.png
+│  │  └── target-lock-50.png
+│  ├── euport.jpg
+│  ├── index.ts
+│  ├── layers
+│  │  ├── layer2.png
+│  │  ├── layer3.svg
+│  │  └── layered-waves-haikei.svg
+│  ├── logo
+│  │  ├── elogo.svg
+│  │  ├── elogo2.svg
+│  │  └── elogo3.svg
+│  ├── mock.ts
+│  ├── planet
+│  │  └── space-planet.png
+│  ├── projects
+│  │  ├── images
+│  │  │  ├── eventure.png
+│  │  │  ├── filmstacker.png
+│  │  │  └── infomobi.png
+│  │  └── logos
+│  │    ├── eventure.png
+│  │    ├── filmstacker.png
+│  │    └── infomobi.jpg
+│  └── stars
+│    ├── stars.png
+│    └── twinkling.png
+├── index.tsx
+├── logo.svg
+├── models
+│  ├── asteroids.types.ts
+│  ├── index.ts
+│  └── project.tsx
+├── pages
+│  ├── About
+│  │  ├── About.styles.ts
+│  │  ├── index.tsx
+│  │  └── Portrait
+│  │    ├── index.tsx
+│  │    ├── Portrait.styles.ts
+│  │    └── t.tree
+│  ├── Game
+│  │  ├── Asteroid
+│  │  │  ├── Asteroid.motion.styles.tsx
+│  │  │  └── index.tsx
+│  │  ├── AsteroidCluster
+│  │  │  ├── AsteroidCluster.helpers.ts
+│  │  │  ├── AsteroidCluster.mock.ts
+│  │  │  ├── AsteroidCluster.styles.ts
+│  │  │  ├── index.tsx
+│  │  │  └── path.spec.js
+│  │  ├── Game.styles.ts
+│  │  ├── index.tsx
+│  │  ├── Planet
+│  │  │  ├── index.tsx
+│  │  │  └── Planet.motion.styles.ts
+│  │  ├── Ripple
+│  │  │  ├── index.tsx
+│  │  │  └── Ripple.styles.ts
+│  │  └── Stars
+│  │    ├── index.tsx
+│  │    └── Stars.styles.ts
+│  ├── Home
+│  │  ├── Home.styles.ts
+│  │  └── index.tsx
+│  ├── Info
+│  │  ├── index.tsx
+│  │  └── Info.styles.ts
+│  ├── Menu
+│  │  ├── index.tsx
+│  │  ├── Logo
+│  │  │  ├── index.tsx
+│  │  │  └── Logo.styles.ts
+│  │  ├── Menu.styles.ts
+│  │  ├── Nav
+│  │  │  ├── index.tsx
+│  │  │  └── Nav.styles.ts
+│  │  └── Social
+│  │    ├── index.tsx
+│  │    └── Social.styles.ts
+│  ├── Page404
+│  │  ├── index.tsx
+│  │  └── Page404.styles.ts
+│  ├── Portfolio
+│  │  ├── index.tsx
+│  │  ├── Portal
+│  │  │  ├── index.tsx
+│  │  │  └── Portal.styles.ts
+│  │  └── Portfolio.styles.ts
+│  └── Skills
+│    ├── Graph
+│    │  ├── Graph.styles.ts
+│    │  └── index.tsx
+│    ├── index.tsx
+│    └── Skills.styles.ts
+├── paths.ts
+├── react-app-env.d.ts
+└── utils
+  └── index.ts

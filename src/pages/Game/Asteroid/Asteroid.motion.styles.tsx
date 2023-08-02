@@ -1,18 +1,20 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
 
-interface Rotate {
+import { targetLock } from "../../../images";
+interface Props {
   rocktype: number;
   rotationspeed: number;
+  size: number;
 }
 
-export const AsteroidMotion = styled(motion.div)<Rotate>`
+export const AsteroidMotion = styled(motion.div)<Props>`
   display: grid;
   position: absolute;
   width: 75px;
   height: 75px;
-  transform: scale(0.8);
-  height: 75px;
+  transform: scale(${({ size }) => size}) translate(-50%, -50%);
+  transform-origim: center;
 
   animation: "rotateAnimationType${({ rocktype: rockType }) => rockType}"
     ${({ rotationspeed: rotationSpeed }) => rotationSpeed + "s"} steps(22)
@@ -107,4 +109,5 @@ export const AsteroidHitbox = styled.div`
   place-self: center;
   width: 95%;
   height: 95%;
+  cursor: url("${targetLock}") 25 25, auto;
 `;

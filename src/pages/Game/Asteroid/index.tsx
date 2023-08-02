@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { AsteroidsModel } from "@models";
 
-import { asteroidType, targetLock } from "../../../images";
+import { asteroidType } from "../../../images";
 
 import { AsteroidHitbox, AsteroidMotion } from "./Asteroid.motion.styles";
 import { AnimationDefinition } from "framer-motion/types/render/utils/animation";
@@ -81,8 +81,9 @@ const Asteroid: React.FC<Props> = ({ asteroid }) => {
           ref={asteroidRef}
           rocktype={asteroid.rockType}
           rotationspeed={asteroid.rotationSpeed}
+          size={asteroid.asteroidSize}
           as={motion.div}
-          initial={"initial"}
+          initial={AsteroidAnimations.INITIAL}
           variants={asteroidVariants}
           custom={asteroid}
           animate={controls}
@@ -94,7 +95,7 @@ const Asteroid: React.FC<Props> = ({ asteroid }) => {
           <AsteroidHitbox
             as={motion.div}
             onClick={onAsteroidHitboxClick}
-            whileHover={{ cursor: `url('${targetLock}') 25 25, auto` }}
+            // whileHover={{ cursor: `url('${targetLock}') 25 25, auto` }}
           ></AsteroidHitbox>
         </AsteroidMotion>
       )}
@@ -109,13 +110,11 @@ const asteroidVariants = {
     backgroundPosition: `calc(75px * 0) calc(-75px * ${asteroid.rockType})`,
     left: asteroid.path.from.left,
     top: asteroid.path.from.top,
-    bottom: asteroid.path.from.bottom,
     opacity: 0,
   }),
   [AsteroidAnimations.MOVE]: (asteroid: AsteroidsModel.Asteroid) => ({
     left: asteroid.path.to.left,
     top: asteroid.path.to.top,
-    bottom: asteroid.path.to.bottom,
     opacity: 1,
     transition: {
       duration: asteroid.pathSpeed,
@@ -128,7 +127,6 @@ const asteroidVariants = {
   }),
   [AsteroidAnimations.MISS]: (asteroid: AsteroidsModel.Asteroid) => ({
     left: asteroid.exitAsteroid.path.to.left,
-    bottom: asteroid.exitAsteroid.path.to.bottom,
     top: asteroid.exitAsteroid.path.to.top,
     opacity: 0.5,
     transition: { duration: asteroid.exitAsteroid.speed, ease: "linear" },
@@ -140,6 +138,9 @@ const asteroidVariants = {
   [AsteroidAnimations.DESTROY]: () => ({
     opacity: 0,
     transition: { duration: 0 },
+  }),
+  test: () => ({
+    opacity: 1,
   }),
 };
 {

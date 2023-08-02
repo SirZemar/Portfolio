@@ -9,6 +9,7 @@ export interface Asteroid {
   impactRoute: boolean;
   exitAsteroid: AsteroidExit;
   interceptLocation?: any;
+  asteroidSize: number;
 }
 
 export interface AsteroidsPerLevels {
@@ -19,12 +20,10 @@ export interface Path {
   from: {
     left: string;
     top: string;
-    bottom: string;
   };
   to: {
     left: string;
     top: string;
-    bottom: string;
   };
 }
 export interface ValuePerIndex {

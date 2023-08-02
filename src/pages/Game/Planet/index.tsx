@@ -1,48 +1,76 @@
-import React, { useEffect, useState } from "react";
-import {motion } from "framer-motion";
+import React, { useRef, useState, useLayoutEffect, useEffect } from "react";
+import { motion } from "framer-motion";
 import { PlanetMotion } from "./Planet.motion.styles";
 import { planetImage } from "../../../images";
 
+enum PlanetAnimations {
+  INTRO = "intro",
+  INITIAL = "initial",
+  Game = "game",
+}
 const planetImageVariants = {
-  initial: { opacity: 0, translateX: 80 },
-  isIntro: {
+  [PlanetAnimations.INITIAL]: { opacity: 0, translateX: -20, right: "50%" },
+  [PlanetAnimations.INTRO]: {
     opacity: 1,
-    translateX: 100,
+    right: "50%%",
+    translateX: 0,
     transition: { opacity: { duration: 1 }, duration: 2 },
   },
-  isGame: {
+  [PlanetAnimations.Game]: (right: number) => ({
     opacity: 1,
-    translateX: [100, 120, -350],
+    right: ["50%", "45%", right],
     rotate: "360deg",
+    translateX: 0,
     transition: {
       rotate: { duration: 40, repeat: Infinity, ease: "linear" },
-      translateX: {
+      right: {
         duration: 2,
         time: [0, 0.5, 1],
         delay: 0.5,
         type: "spring",
       },
     },
-  },
+  }),
 };
 
 export const Planet: React.FC<any> = ({ gameStarted }) => {
-  const [gameState, setGameState] = useState("isIntro");
+  const planetRef = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState<number | undefined>(0);
+  const [height, setHeight] = useState<number>(0);
+  const [right, setRigth] = useState("");
+
+  useLayoutEffect(() => {
+    setWidth(planetRef.current ? planetRef.current.clientWidth : 0);
+    setHeight(planetRef.current ? planetRef.current.offsetHeight : 0);
+
+    if (width && height) {
+      const rightNumber = 100 - (height * 100) / width / 3;
+      setRigth(rightNumber + "%");
+    }
+  }, [width, height]);
 
   useEffect(() => {
-    if (gameStarted) {
-      setGameState("isGame");
-    }
-  }, [gameStarted]);
+    const handleWindowResize = () => {
+      setWidth(planetRef.current ? planetRef.current.clientHeight : 0);
+      setHeight(planetRef.current ? planetRef.current.offsetHeight : 0);
+    };
+
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
 
   return (
-    <PlanetMotion as={motion.div}>
+    <PlanetMotion as={motion.div} ref={planetRef}>
       <motion.img
         className="planet-image"
         src={planetImage}
+        custom={right}
         variants={planetImageVariants}
-        initial={"initial"}
-        animate={gameState}
+        initial={PlanetAnimations.INITIAL}
+        animate={gameStarted ? PlanetAnimations.Game : PlanetAnimations.INTRO}
       ></motion.img>
     </PlanetMotion>
   );

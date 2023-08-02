@@ -1,5 +1,5 @@
 import { AsteroidsModel } from "@models";
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   getRandomIntFromInterval,
   roundToDecimal,
@@ -30,27 +30,30 @@ export const useGenerateAsteroids = (
   configurationsData: AsteroidConfigurations
 ): AsteroidsModel.AsteroidsPerLevels => {
   const [asteroids, setAsteroids] = useState({});
-  const [configurations] = useState(configurationsData);
 
   const asteroidNumberPerLevel = useMemo(
-    () => getAsteroidsNumberPerLevel(configurations.totalLevels),
-    [configurations.totalLevels]
+    () => getAsteroidsNumberPerLevel(configurationsData.totalLevels),
+    [configurationsData.totalLevels]
   );
   const asteroidsTimeGapPerLevel = useMemo(
-    () => getAsteroidsTimeGapPerLevel(configurations, asteroidNumberPerLevel),
-    [configurations, asteroidNumberPerLevel]
+    () =>
+      getAsteroidsTimeGapPerLevel(configurationsData, asteroidNumberPerLevel),
+    [configurationsData, asteroidNumberPerLevel]
   );
   const asteroidsWindowTimePerLevel = useMemo(
     () =>
-      getAsteroidsWindowTimePerLevel(configurations, asteroidNumberPerLevel),
-    [configurations, asteroidNumberPerLevel]
+      getAsteroidsWindowTimePerLevel(
+        configurationsData,
+        asteroidNumberPerLevel
+      ),
+    [configurationsData, asteroidNumberPerLevel]
   );
 
   useEffect(() => {
     let baseTime = 3000;
 
     const asteroidsData = {} as any;
-    for (let level = 0; level < configurations.totalLevels; level++) {
+    for (let level = 0; level < configurationsData.totalLevels; level++) {
       const levelAsteroids = [];
       for (
         let asteroidIndex = 0;
@@ -80,6 +83,9 @@ export const useGenerateAsteroids = (
           pathSpeed
         );
 
+        const asteroidSize = getAsteroidSize(configurationsData.planetSize);
+        console.log("Size in hook: ", asteroidSize);
+
         const asteroid: AsteroidsModel.Asteroid = {
           id: `${level}-${asteroidIndex}`,
           path,
@@ -90,40 +96,39 @@ export const useGenerateAsteroids = (
           state: AsteroidState.IDLE,
           impactRoute,
           exitAsteroid,
+          asteroidSize,
         };
         levelAsteroids.push(asteroid);
       }
       asteroidsData[`level-${level}`] = levelAsteroids;
     }
 
+    console.log(configurationsData.planetSize);
+
     setAsteroids(asteroidsData);
-  }, [configurations]);
+  }, [configurationsData]);
 
   return asteroids;
 };
 
+const getAsteroidSize = (planetSize: number): number => {
+  const size = (planetSize * 0.15) / 75;
+  return size;
+};
+
 const getAsteroidRandomPath = (side: string): AsteroidsModel.Path => {
-  const from: AsteroidsModel.PathFrom = { left: "", top: "", bottom: "" };
-  const to: AsteroidsModel.PathTo = { left: "", top: "", bottom: "" };
+  const from: AsteroidsModel.PathFrom = { left: "", top: "" };
+  const to: AsteroidsModel.PathTo = { left: "", top: "" };
 
   let path = {} as AsteroidsModel.Path;
 
   switch (side) {
     case AsteroidOriginSide.TOP:
-      from.left = `${getRandomIntFromInterval(85, 100)}%`;
-      from.bottom = "100%";
-      from.top = "Auto";
-
-      to.left = "0";
-      to.bottom = `${getRandomIntFromInterval(0, 80)}%`;
-
-      break;
     case AsteroidOriginSide.BOTTOM:
       from.left = `${getRandomIntFromInterval(85, 100)}%`;
-      from.top = "100%";
-      from.bottom = "Auto";
-
       to.left = "0";
+
+      from.top = successByProbability(50) ? "0" : "100%";
       to.top = `${getRandomIntFromInterval(0, 80)}%`;
 
       break;
@@ -131,30 +136,8 @@ const getAsteroidRandomPath = (side: string): AsteroidsModel.Path => {
       from.left = "100%";
       to.left = "0";
 
-      const verticalSide = successByProbability(50)
-        ? AsteroidOriginSide.TOP
-        : AsteroidOriginSide.BOTTOM;
-
-      const verticalRandomStart = getRandomIntFromInterval(0, 100);
-      const verticalRandomEnd = getRandomIntFromInterval(0, 100);
-
-      from.bottom =
-        verticalSide === AsteroidOriginSide.BOTTOM
-          ? `${verticalRandomStart}%`
-          : "Auto";
-      from.top =
-        verticalSide === AsteroidOriginSide.TOP
-          ? `${verticalRandomStart}%`
-          : "Auto";
-
-      to.bottom =
-        verticalSide === AsteroidOriginSide.BOTTOM
-          ? `${verticalRandomEnd}%`
-          : "Auto";
-      to.top =
-        verticalSide === AsteroidOriginSide.TOP
-          ? `${verticalRandomEnd}%`
-          : "Auto";
+      from.top = `${getRandomIntFromInterval(0, 100)}%`;
+      to.top = `${getRandomIntFromInterval(0, 100)}%`;
 
       break;
   }
@@ -230,12 +213,11 @@ const getAsteroidRandomRockType = (): number => {
 };
 
 const isImpactRoute = (path: AsteroidsModel.Path): boolean => {
-  const bottomValue = parseInt(path.to.bottom, 10);
   const topValue = parseInt(path.to.top, 10);
 
-  const value = isNaN(bottomValue) ? topValue : bottomValue;
+  const value = isNaN(topValue) ? topValue : topValue;
 
-  return value > 84 || value < 5 ? false : true;
+  return value > 80 || value < 16 ? false : true;
 };
 
 const getAsteroidExitInfo = (
@@ -246,40 +228,20 @@ const getAsteroidExitInfo = (
   let verticalDiff = 0;
   let horizontalDiff = 100;
   let top = "";
-  let bottom = "";
   switch (side) {
     case AsteroidOriginSide.TOP:
-      verticalDiff =
-        parseInt(path.to.bottom, 10) - parseInt(path.from.bottom, 10);
-      top = "Auto";
-      bottom = verticalDiff / 10 + parseInt(path.to.bottom, 10) + "%";
-      break;
     case AsteroidOriginSide.BOTTOM:
       verticalDiff = parseInt(path.to.top, 10) - parseInt(path.from.top, 10);
-      bottom = "Auto";
       top = verticalDiff / 10 + parseInt(path.to.top, 10) + "%";
       break;
     case AsteroidOriginSide.RIGHT:
-      if (path.to.bottom === "Auto") {
-        verticalDiff = parseInt(path.to.top, 10) - parseInt(path.from.top, 10);
-        bottom = "Auto";
-        horizontalDiff =
-          parseInt(path.to.left, 10) - parseInt(path.from.left, 10);
-        top =
-          verticalDiff / (parseInt(path.from.left, 10) / 10) +
-          parseInt(path.to.top, 10) +
-          "%";
-      } else {
-        verticalDiff =
-          parseInt(path.to.bottom, 10) - parseInt(path.from.bottom, 10);
-        top = "Auto";
-        horizontalDiff =
-          parseInt(path.to.left, 10) - parseInt(path.from.left, 10);
-        bottom =
-          verticalDiff / (parseInt(path.from.left, 10) / 10) +
-          parseInt(path.to.bottom, 10) +
-          "%";
-      }
+      verticalDiff = parseInt(path.to.top, 10) - parseInt(path.from.top, 10);
+      horizontalDiff =
+        parseInt(path.to.left, 10) - parseInt(path.from.left, 10);
+      top =
+        verticalDiff / (parseInt(path.from.left, 10) / 10) +
+        parseInt(path.to.top, 10) +
+        "%";
       break;
   }
 
@@ -288,7 +250,6 @@ const getAsteroidExitInfo = (
     to: {
       left: "-10%",
       top,
-      bottom,
     },
   };
 
@@ -320,11 +281,11 @@ const getAsteroidsNumberPerLevel = (
 };
 
 const getAsteroidsTimeGapPerLevel = (
-  configurations: Configurations,
+  configurationsData: Configurations,
   asteroidsPerLevel: AsteroidsModel.AsteroidsNumberPerLevel
 ): AsteroidsModel.AsteroidsTimeGapPerLevel => {
-  const fullTime = configurations.fullTime;
-  const totalLevels = configurations.totalLevels;
+  const fullTime = configurationsData.fullTime;
+  const totalLevels = configurationsData.totalLevels;
 
   const asteroidsTimeGapBufferPerLevel: any = {};
   for (let i = 0; i < totalLevels; i++) {
@@ -340,15 +301,15 @@ const getAsteroidsTimeGapPerLevel = (
 };
 
 const getAsteroidsWindowTimePerLevel = (
-  configurations: Configurations,
+  configurationsData: Configurations,
   asteroidsPerLevel: AsteroidsModel.AsteroidsNumberPerLevel
 ): AsteroidsModel.AsteroidsWindowTimePerLevel => {
-  const fullTime = configurations.fullTime;
-  const totalLevels = configurations.totalLevels;
+  const fullTime = configurationsData.fullTime;
+  const totalLevels = configurationsData.totalLevels;
 
   const asteroidsWindowTimePerLevel: any = {};
   const asteroidsTimeGapPerLevel = getAsteroidsTimeGapPerLevel(
-    configurations,
+    configurationsData,
     asteroidsPerLevel
   );
 
