@@ -23,8 +23,8 @@ import Scores from "./Scores";
 
 const Game: React.FC = () => {
   // Configurations
-  const gameFullTime = 5000;
-  const gameTotalLevels = 2;
+  const gameFullTime = 60000;
+  const gameTotalLevels = 7;
 
   const [gameStarted, setGameStarted] = useState(false);
   const { timer, intervalRef, gameIsOver } = useGameCountdown(
