@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState, useLayoutEffect } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useLayoutEffect,
+  useCallback,
+} from "react";
 import { Container } from "./Game.styles";
 
 // Components
@@ -37,7 +43,7 @@ const Game: React.FC = () => {
     gameFullTime,
     gameStarted
   );
-  console.log("Game rendered!");
+  const [planetHit, setPlanetHit] = useState(false);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -60,6 +66,10 @@ const Game: React.FC = () => {
     totalLevels: gameTotalLevels,
     planetSize: 0,
   });
+
+  const planetImpact = useCallback(() => {
+    setPlanetHit(true);
+  }, []);
 
   useLayoutEffect(() => {
     planetRef.current = document.querySelector(".planet-image");
@@ -145,10 +155,15 @@ const Game: React.FC = () => {
         <AsteroidCluster
           configurations={configurations}
           gameStarted={gameStarted}
+          planetImpact={planetImpact}
         />
         <div className="inner-container">
           <div className="inner-container__planet">
-            <Planet gameStarted={gameStarted} />
+            <Planet
+              gameStarted={gameStarted}
+              planetImpact={planetHit}
+              setPlanetImpact={setPlanetHit}
+            />
           </div>
           {!gameStarted && (
             <div className="inner-container__intro">

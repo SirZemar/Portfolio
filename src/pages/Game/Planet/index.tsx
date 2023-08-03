@@ -1,8 +1,19 @@
-import React, { useRef, useState, useLayoutEffect, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, {
+  useRef,
+  useState,
+  useLayoutEffect,
+  useEffect,
+  useMemo,
+} from "react";
+import { motion, useAnimation } from "framer-motion";
 import { PlanetMotion } from "./Planet.motion.styles";
 import { planetImage } from "../../../images";
 
+interface Props {
+  gameStarted: boolean;
+  planetImpact: boolean;
+  setPlanetImpact: (x: boolean) => void;
+}
 enum PlanetAnimations {
   INTRO = "intro",
   INITIAL = "initial",
@@ -33,11 +44,28 @@ const planetImageVariants = {
   }),
 };
 
-export const Planet: React.FC<any> = ({ gameStarted }) => {
+export const Planet: React.FC<Props> = ({
+  gameStarted,
+  planetImpact,
+  setPlanetImpact,
+}) => {
   const planetRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number | undefined>(0);
   const [height, setHeight] = useState<number>(0);
   const [right, setRigth] = useState("");
+
+  const controls = useAnimation();
+
+  useMemo(() => {
+    if (planetImpact) {
+      controls
+        .start({
+          opacity: [0, 1, 0, 1, 0, 1],
+          transition: { duration: 0.4 },
+        })
+        .then(() => setPlanetImpact(false));
+    }
+  }, [planetImpact]);
 
   useLayoutEffect(() => {
     setWidth(planetRef.current ? planetRef.current.clientWidth : 0);
@@ -63,7 +91,7 @@ export const Planet: React.FC<any> = ({ gameStarted }) => {
   }, []);
 
   return (
-    <PlanetMotion as={motion.div} ref={planetRef}>
+    <PlanetMotion as={motion.div} ref={planetRef} animate={controls}>
       <motion.img
         className="planet-image"
         src={planetImage}

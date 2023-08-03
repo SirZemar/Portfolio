@@ -6,6 +6,7 @@ import { useGenerateAsteroids } from "src/hooks/useGenerateAsteroids";
 interface Props {
   configurations: AsteroidConfigurations;
   gameStarted: boolean;
+  planetImpact: () => void;
 }
 
 export interface AsteroidConfigurations {
@@ -14,7 +15,11 @@ export interface AsteroidConfigurations {
   planetSize: number;
 }
 
-const AsteroidCluster: React.FC<Props> = ({ configurations, gameStarted }) => {
+const AsteroidCluster: React.FC<Props> = ({
+  configurations,
+  gameStarted,
+  planetImpact,
+}) => {
   const asteroidsPerLevels = useGenerateAsteroids(
     configurations
     // configurations.planetSize
@@ -35,6 +40,7 @@ const AsteroidCluster: React.FC<Props> = ({ configurations, gameStarted }) => {
                 key={asteroid.id}
                 asteroid={asteroid}
                 gamePlaying={gameStarted}
+                planetImpact={planetImpact}
               ></Asteroid>
             ) : null;
           })}
