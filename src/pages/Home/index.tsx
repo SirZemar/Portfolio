@@ -26,7 +26,7 @@ const Home: React.FC = () => (
           <h2 className="line">
             I'm a Web Developer.
             <span style={{ display: "inline-block" }}>
-              <Button type={ButtonType.ROUTE} path="/game">
+              <Button type={ButtonType.ROUTE} to="/game">
                 Danger
               </Button>
             </span>

@@ -13,14 +13,9 @@ interface Props {
   link?: string;
   path?: string;
   fun?: () => any;
+  to?: string;
 }
-export const Button: React.FC<Props> = ({
-  children,
-  link,
-  type,
-  path,
-  fun,
-}) => (
+export const Button: React.FC<Props> = ({ children, link, type, path, fun, to }) => (
   <Container>
     <div className="button-container">
       {type === ButtonType.LINK && (
@@ -34,7 +29,7 @@ export const Button: React.FC<Props> = ({
         </button>
       )}
       {type === ButtonType.ROUTE && (
-        <NavLink className={"button"} to={"game"}>
+        <NavLink className={"button"} to={to ?? ""}>
           {children}
         </NavLink>
       )}
