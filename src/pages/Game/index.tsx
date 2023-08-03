@@ -27,6 +27,7 @@ import Stars from "./Stars";
 
 import { useGameCountdown } from "../../hooks/useGameCountdown";
 import Text from "src/common/Text";
+import Scores from "./Scores";
 
 export interface Coordenates {
   x: number;
@@ -115,6 +116,7 @@ const Game: React.FC = () => {
   return (
     // Container onClick={handleClick}
     <Container>
+      <Scores />
       <Ripple
         coordenatesArray={mousePositionArray}
         setCoordenatesArray={setMoussePositionArray}
