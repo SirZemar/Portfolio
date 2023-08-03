@@ -111,3 +111,7 @@ export const AsteroidHitbox = styled.div`
   height: 95%;
   cursor: url("${targetLock}") 25 25, auto;
 `;
+
+export const ExplosionMotion = styled(motion.div)`
+  animation: none;
+`;
