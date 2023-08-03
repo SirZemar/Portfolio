@@ -44,7 +44,7 @@ const planetImageVariants = {
   }),
 };
 
-export const Planet: React.FC<Props> = ({
+const Planet: React.FC<Props> = ({
   gameStarted,
   planetImpact,
   setPlanetImpact,
@@ -103,3 +103,5 @@ export const Planet: React.FC<Props> = ({
     </PlanetMotion>
   );
 };
+
+export default Planet;

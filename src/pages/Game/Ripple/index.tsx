@@ -3,8 +3,12 @@ import React from "react";
 import { SVG } from "./Ripple.styles";
 // Animation
 import { motion } from "framer-motion";
-// Type
-import { Coordenates } from "..";
+
+interface Coordenates {
+  x: string;
+  y: string;
+  id: string;
+}
 
 interface Props {
   coordenatesArray: Coordenates[];

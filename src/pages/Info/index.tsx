@@ -4,7 +4,7 @@ import Layout, { placement, position } from "../../common/Layout";
 // Components
 import { Map } from "./Info.styles";
 import { Contact } from "./Info.styles";
-// import { Button, Type } from "../../common/Button";
+
 const Info: React.FC = () => (
   <Wrapper>
     <Layout>

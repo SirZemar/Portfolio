@@ -8,32 +8,19 @@ import React, {
 import { Container } from "./Game.styles";
 
 // Components
-import Ripple from "./Ripple";
-import { Planet } from "./Planet";
-import { Button, ButtonType } from "src/common/Button";
+import Button, { ButtonType } from "src/common/Button";
+import Text from "src/common/Text";
+import Planet from "./Planet";
+import Stars from "./Stars";
 import AsteroidCluster from "./AsteroidCluster";
-
-// Unique Id
-import { v4 as uuid } from "uuid";
-// Paths
-import paths from "../../paths";
-// Shuffle
-import { shuffle } from "../../utils";
 // Styles
 import { Wrapper } from "../../common/Wrapper";
 // Images
 import { aiming } from "../../images";
-import Stars from "./Stars";
 
 import { useGameCountdown } from "../../hooks/useGameCountdown";
-import Text from "src/common/Text";
 import Scores from "./Scores";
 
-export interface Coordenates {
-  x: number;
-  y: number;
-  id: string;
-}
 const Game: React.FC = () => {
   // Configurations
   const gameFullTime = 30000;
@@ -55,11 +42,6 @@ const Game: React.FC = () => {
     }
     return () => clearTimeout(timeout);
   }, [gameIsOver]);
-
-  const [mousePositionArray, setMoussePositionArray] = useState<Coordenates[]>(
-    []
-  );
-  const [pathArray, setPathArray] = useState<string[]>([]);
 
   const planetRef = useRef<any>(null);
   const [configurations, setConfigurations] = useState({
@@ -116,12 +98,7 @@ const Game: React.FC = () => {
   return (
     // Container onClick={handleClick}
     <Container>
-      <Scores />
-      <Ripple
-        coordenatesArray={mousePositionArray}
-        setCoordenatesArray={setMoussePositionArray}
-        paths={pathArray}
-      />
+      {gameIsOver && <Scores />}
       <Stars />
       <Wrapper
         style={{
@@ -131,29 +108,6 @@ const Game: React.FC = () => {
           userSelect: "none",
         }}
       >
-        {/* TODO create component for visual help */}
-        {/* <div
-          style={{
-            position: "absolute",
-            display: "block",
-            background: "red",
-            height: "1px",
-            width: "100%",
-            left: "0",
-            bottom: "20%",
-          }}
-        ></div>
-        <div
-          style={{
-            position: "absolute",
-            display: "block",
-            background: "red",
-            height: "1px",
-            width: "100%",
-            left: "0",
-            bottom: "80%",
-          }}
-        ></div> */}
         <AsteroidCluster
           configurations={configurations}
           gameStarted={gameStarted}

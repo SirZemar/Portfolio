@@ -14,7 +14,7 @@ import filmstackerPage from "../../images/projects/images/filmstacker.png";
 import infomobiPage from "../../images/projects/images/infomobi.png";
 import eventurePage from "../../images/projects/images/eventure.png";
 
-// import { Spinner } from "../../common/Spinner";
+// import Spinner from "../../common/Spinner";
 import { Skeleton } from "@mui/material";
 
 // Professional projects

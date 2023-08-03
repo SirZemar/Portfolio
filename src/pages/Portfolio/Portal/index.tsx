@@ -8,7 +8,7 @@ import {
 } from "./Portal.styles";
 import { LayoutProps } from "../../../common/Layout";
 import { Project } from "../../../models/project";
-import { Button, ButtonType } from "../../../common/Button";
+import Button, { ButtonType } from "../../../common/Button";
 import { LinearProgress } from "@mui/material";
 
 interface Props extends LayoutProps {

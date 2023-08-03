@@ -5,7 +5,7 @@ import { Container } from "./Home.styles";
 
 import Layout, { position, placement } from "../../common/Layout";
 import Text from "../../common/Text";
-import { Button, ButtonType } from "../../common/Button";
+import Button, { ButtonType } from "../../common/Button";
 
 export interface Coordenates {
   x: number;
