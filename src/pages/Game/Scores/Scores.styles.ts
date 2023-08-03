@@ -2,9 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   position: absolute;
-  opacity: 1;
-  display: block;
-  background: red;
   width: 100%;
   height: 100%;
   display: flex;
@@ -13,7 +10,17 @@ export const Container = styled.div`
   z-index: 100;
 `;
 
+export const Background = styled.div`
+  position: absolute;
+  display: block;
+  background: black;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+`;
+
 export const Table = styled.div`
+  opacity: 1;
   display: grid;
   grid-template-columns: 80% 20%;
   grid-template-rows: 40px 30px 3px 1fr 40px;
