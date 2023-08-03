@@ -23,8 +23,8 @@ import Scores from "./Scores";
 
 const Game: React.FC = () => {
   // Configurations
-  const gameFullTime = 30000;
-  const gameTotalLevels = 5;
+  const gameFullTime = 5000;
+  const gameTotalLevels = 2;
 
   const [gameStarted, setGameStarted] = useState(false);
   const { timer, intervalRef, gameIsOver } = useGameCountdown(
@@ -34,13 +34,9 @@ const Game: React.FC = () => {
   const [planetHit, setPlanetHit] = useState(false);
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
     if (gameIsOver) {
-      timeout = setTimeout(() => {
-        alert("You are a hero! You saved our planet.");
-      }, 6000);
+      alert("You are a hero! You saved our planet.");
     }
-    return () => clearTimeout(timeout);
   }, [gameIsOver]);
 
   const planetRef = useRef<any>(null);
@@ -79,24 +75,7 @@ const Game: React.FC = () => {
     };
   }, []);
 
-  // const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-  //   const offset = e.currentTarget.getBoundingClientRect().x;
-  //   const x = e.pageX - offset;
-  //   const y = e.pageY;
-
-  //   // Ripple child should be in charge of setting up the arrayy from the coordenates prop
-  //   setMoussePositionArray(
-  //     mousePositionArray.length > 0
-  //       ? (prev) => [...prev, { x, y, id: uuid() }]
-  //       : [{ x, y, id: uuid() }]
-  //   );
-
-  //   const newPaths = shuffle(paths);
-
-  //   setPathArray(newPaths);
-  // };
   return (
-    // Container onClick={handleClick}
     <Container>
       {gameIsOver && <Scores />}
       <Stars />
@@ -108,11 +87,13 @@ const Game: React.FC = () => {
           userSelect: "none",
         }}
       >
-        <AsteroidCluster
-          configurations={configurations}
-          gameStarted={gameStarted}
-          planetImpact={planetImpact}
-        />
+        {!gameIsOver && (
+          <AsteroidCluster
+            configurations={configurations}
+            gameStarted={gameStarted}
+            planetImpact={planetImpact}
+          />
+        )}
         <div className="inner-container">
           <div className="inner-container__planet">
             <Planet
