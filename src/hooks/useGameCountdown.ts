@@ -15,8 +15,12 @@ export const useGameCountdown = (
 
     if (timerRef.current <= 0) {
       clearInterval(intervalRef.current);
-      setGameIsOver(true);
+      const overTime = setTimeout(() => {
+        setGameIsOver(true);
+        return () => clearTimeout(overTime);
+      }, 10000);
     }
+
   };
 
   useEffect(() => {
