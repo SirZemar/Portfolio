@@ -20,13 +20,7 @@ const AsteroidCluster: React.FC<Props> = ({
   gameStarted,
   planetImpact,
 }) => {
-  const asteroidsPerLevels = useGenerateAsteroids(
-    configurations
-    // configurations.planetSize
-  );
-  console.log(asteroidsPerLevels);
-
-  // console.log("size: ", configurations.planetSize);
+  const asteroidsPerLevels = useGenerateAsteroids(configurations);
 
   return (
     <Container>
@@ -48,4 +42,4 @@ const AsteroidCluster: React.FC<Props> = ({
   );
 };
 
-export default AsteroidCluster;
+export default React.memo(AsteroidCluster);
