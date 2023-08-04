@@ -168,7 +168,4 @@ const asteroidVariants = {
     scale: 0,
     transition: { duration: 0.5, opacity: { duration: 0 } },
   }),
-  test: () => ({
-    opacity: 1,
-  }),
 };

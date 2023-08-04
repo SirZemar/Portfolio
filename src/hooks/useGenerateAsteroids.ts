@@ -112,7 +112,7 @@ export const useGenerateAsteroids = (
 };
 
 const getAsteroidSize = (planetSize: number): number => {
-  const size = (planetSize * 0.15) / 75;
+  const size = (planetSize * 0.13) / 75;
   return size;
 };
 
